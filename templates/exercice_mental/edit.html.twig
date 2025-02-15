@@ -1,0 +1,12 @@
+{% extends 'admin/admin.html.twig' %}
+
+
+{% block content %}
+    <h1>Edit ExerciceMental</h1>
+
+    {{ include('exercice_mental/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_exercice_mental_index') }}">back to list</a>
+
+    {{ include('exercice_mental/_delete_form.html.twig') }}
+{% endblock %}
