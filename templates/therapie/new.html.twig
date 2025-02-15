@@ -1,0 +1,11 @@
+{% extends 'admin/admin.html.twig' %}
+
+
+{% block content %}
+    <h1>Create new Therapie</h1>
+        <br>
+                <br>
+    {{ include('therapie/_form.html.twig') }}
+
+    <a href="{{ path('app_therapie_index') }}">back to list</a>
+{% endblock %}
