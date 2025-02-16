@@ -1,55 +1,59 @@
-{% extends 'admin/admin.html.twig' %}
+{% extends 'Client/index.html.twig' %}
 
-{% block content %}
-<div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-            <h2 class="card-title mb-0">Détails de la Thérapie</h2>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <th style="width: 150px;">Id</th>
-                        <td>{{ therapie.id }}</td>
-                    </tr>
-                    <tr>
-                        <th>Image</th>
-                        <td>
-                            {% if therapie.image %}
-                                <img src="{{ asset('img/therapie.jpg') }}" alt="{{ therapie.nom }}" class="img-fluid" style="max-height: 200px;">
-                            {% else %}
-                                <em>Aucune image</em>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Nom</th>
-                        <td>{{ therapie.nom }}</td>
-                    </tr>
-                    <tr>
-                        <th>Description</th>
-                        <td>{{ therapie.description }}</td>
-                    </tr>
-                    <tr>
-                        <th>Objectif</th>
-                        <td>{{ therapie.objectif }}</td>
-                    </tr>
-                    <tr>
-                        <th>Durée</th>
-                        <td>{{ therapie.duree }}</td>
-                    </tr>
-                    <tr>
-                        <th>Type</th>
-                        <td>{{ therapie.type }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer text-end">
-            <a href="{{ path('app_therapie_index') }}" class="btn btn-secondary">Retour à la liste</a>
-            <a href="{{ path('app_therapie_edit', {'id': therapie.id}) }}" class="btn btn-warning">Modifier</a>
-            {{ include('therapie/_delete_form.html.twig') }}
+{% block body %}
+<div class="container mt-5 pt-5"> {# Increased margin and padding to move content further down #}
+    <div class="d-flex justify-content-center">
+        <div class="w-75">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title mb-0 text-center">Détails de la Thérapie</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th style="width: 150px;">Id</th>
+                                <td>{{ therapie.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Image</th>
+                                <td>
+                                    {% if therapie.image %}
+                                        <img src="{{ asset('img/therapie.jpg') }}" alt="{{ therapie.nom }}" class="img-fluid d-block mx-auto" style="max-height: 200px;">
+                                    {% else %}
+                                        <em>Aucune image</em>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ therapie.nom }}</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>{{ therapie.description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Objectif</th>
+                                <td>{{ therapie.objectif }}</td>
+                            </tr>
+                            <tr>
+                                <th>Durée</th>
+                                <td>{{ therapie.duree }}</td>
+                            </tr>
+                            <tr>
+                                <th>Type</th>
+                                <td>{{ therapie.type }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{{ path('app_therapie_index') }}" class="btn btn-secondary">Retour à la liste</a>
+                    <a href="{{ path('app_therapie_edit', {'id': therapie.id}) }}" class="btn btn-warning">Modifier</a>
+                    {{ include('therapie/_delete_form.html.twig') }}
+                </div>
+            </div>
         </div>
     </div>
 </div>

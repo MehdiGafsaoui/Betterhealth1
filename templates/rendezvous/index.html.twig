@@ -3,36 +3,37 @@
 {% block title %}Welcome to BetterHealth{% endblock %}
 
 {% block body %}
-    <div class="container text-center mt-5">
-        <h1 class="mb-4">Welcome to BetterHealth</h1>
-        <p class="lead">Book medical services easily and find the nearest providers.</p>
+<div class="container text-center mt-5 pt-5"> {# Push content further down #}
+    <h1 class="mb-4">Welcome to BetterHealth</h1>
+    <p class="lead">Book medical services easily and find the nearest providers.</p>
 
-        <div class="row mt-5">
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">Book an Appointment</h5>
-                        <p class="card-text">Choose a medical service and schedule a visit.</p>
-                        <a href="{{ path('rendezvous_new') }}" class="btn btn-primary">Book Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">View Appointments</h5>
-                        <p class="card-text">Check your scheduled medical appointments.</p>
-                        <a href="{{ path('rendezvous_list') }}" class="btn btn-success">View List</a>
-                    </div>
+    <div class="row mt-5 justify-content-center"> {# Centering the cards #}
+        <div class="col-md-5 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Book an Appointment</h5>
+                    <p class="card-text">Choose a medical service and schedule a visit.</p>
+                    <a href="{{ path('rendezvous_new') }}" class="btn btn-primary">Book Now</a>
                 </div>
             </div>
         </div>
-
-        <div class="mt-5">
-            <h3>Find Nearby Services</h3>
-            <p>Locate the nearest nurses and physiotherapists on the map.</p>
-            <a href="{{ path('rendezvous_map') }}" class="btn btn-info">View Map</a>
+        <div class="col-md-5 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">View Appointments</h5>
+                    <p class="card-text">Check your scheduled medical appointments.</p>
+                    <a href="{{ path('rendezvous_list') }}" class="btn btn-success">View List</a>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div class="mt-5">
+        <h3>Find Nearby Services</h3>
+        <p>Locate the nearest nurses and physiotherapists on the map.</p>
+        <a href="{{ path('rendezvous_map') }}" class="btn btn-info">View Map</a>
+    </div>
+</div>
 {% endblock %}
+
 

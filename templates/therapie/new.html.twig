@@ -1,11 +1,17 @@
-{% extends 'admin/admin.html.twig' %}
+{% extends 'Client/index.html.twig' %}
 
 
-{% block content %}
-    <h1>Create new Therapie</h1>
-        <br>
-                <br>
-    {{ include('therapie/_form.html.twig') }}
+{% block body %}
+<div class="d-flex justify-content-center mt-5 pt-5"> {# Added margin and padding to move content down #}
+    <div class="w-75"> {# Adjust width as needed #}
+        <h1 class="text-center">Create New Therapie</h1>
+        <br><br>
+        {{ include('therapie/_form.html.twig') }}
 
-    <a href="{{ path('app_therapie_index') }}">back to list</a>
+        <div class="text-center mt-3">
+            <a href="{{ path('app_therapie_index') }}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
