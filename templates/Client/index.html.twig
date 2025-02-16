@@ -114,12 +114,12 @@
                     <div class="banner_text">
                         <div class="banner_text_iner">
                             <h5>We are here for your care</h5>
-                            <h1>Best Care & Better Doctor</h1>
+                            <h1>Best Care & Better health</h1>
                             <p>Your health, our priority—trust in experienced and compassionate care.</p>
 {% if app.user %}
     <a href="{{ path('app_appointments') }}" class="btn_2">Make an appointment</a>
 {% else %}
-    <a href="{{ path('app_register') }}" class="btn_2">Make an appointment</a>
+    <a href="{{ path('app_login') }}" class="btn_2">Make an appointment</a>
 {% endif %}                        </div>
                     </div>
                 </div>
@@ -156,7 +156,11 @@
                         <h2>Mental health</h2>
                         <p>
 Tools for mental well-being with personalized content and secure appointments.</p>
+                    {% if app.user %}
                         <a class="btn_2 " href="{{ path('app_exercice_mental_index') }}">learn more</a>
+                        {% else %}
+                        <a class="btn_2 " href="{{ path('app_login') }}">learn more</a>
+                        {% endif %} 
                         <div class="banner_item">
                             <div class="single_item">
                                 <img src="img/icon/banner_1.svg" alt="">
