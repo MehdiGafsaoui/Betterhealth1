@@ -1,0 +1,44 @@
+{% extends 'Client/index.html.twig' %}
+{% block title %}Book an Appointment{% endblock %}
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h1 class="text-center mb-4">Book an Appointment</h1>
+            <p class="text-center text-muted">Choose your service, pick a date, and provide your email.</p>
+
+            <!-- Flash Messages -->
+            {% for flash_message in app.flashes('error') %}
+                <div class="alert alert-danger text-center">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+                    <div class="mb-3">
+                        <label class="form-label">Select a Service</label>
+                        {{ form_widget(form.service, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Choose a Date</label>
+                        {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Your Email</label>
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary w-100">Confirm Appointment</button>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
