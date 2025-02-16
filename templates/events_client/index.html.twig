@@ -1,0 +1,80 @@
+{% extends 'client/index.html.twig' %}
+
+{% block body %}
+    <h1 class="text-center" style="margin-top: 80px;">Liste des événements</h1>
+
+    <!-- Affichage des messages flash -->
+    <div class="container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <!-- Barre de recherche -->
+    <div class="text-center" style="margin-top: 50px;">
+        <input type="search" id="myInput" class="form-control w-50 mx-auto" placeholder="Rechercher un événement...">
+    </div>
+
+    <!-- Tableau des événements -->
+    <div style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
+        <table class="table table-bordered" style="width: 80%; text-align: center; margin-top: 30px; margin-bottom: 20px; border: 2px solid blue;">
+            <thead>
+                <tr style="background-color: #f0f8ff;"> 
+                    <th style="border: 2px solid blue;">Id</th>
+                    <th style="border: 2px solid blue;">Nom</th>
+                    <th style="border: 2px solid blue;">Description</th>
+                    <th style="border: 2px solid blue;">Date début</th>
+                    <th style="border: 2px solid blue;">Date fin</th>
+                    <th style="border: 2px solid blue;">Lieu</th>
+                    <th style="border: 2px solid blue;">Image</th>
+                    <th style="border: 2px solid blue;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evenement in evenements %}
+                    <tr>
+                        <td style="border: 2px solid blue;">{{ evenement.id }}</td>
+                        <td style="border: 2px solid blue;">{{ evenement.nom }}</td>
+                        <td style="border: 2px solid blue;">{{ evenement.description }}</td>
+                        <td style="border: 2px solid blue;">{{ evenement.Datedebut ? evenement.Datedebut|date('Y-m-d') : '' }}</td>
+                        <td style="border: 2px solid blue;">{{ evenement.Datefin ? evenement.Datefin|date('Y-m-d') : '' }}</td>
+                        <td style="border: 2px solid blue;">{{ evenement.Lieu }}</td>
+                        <td style="border: 2px solid blue;">
+                            {% if evenement.image %}
+                                <img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Image de l'événement" style="width: 100px; height: auto;">
+                            {% else %}
+                                <span>Pas d'image</span>
+                            {% endif %}
+                        </td>
+                        <td style="border: 2px solid blue;">
+                            <a href="{{ path('app_evenements_participate', {'id': evenement.id}) }}" class="btn btn-success btn-sm">
+                                Participer
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8" style="border: 2px solid blue;">Aucun événement trouvé</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Script pour la recherche en temps réel -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("table tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+{% endblock %}

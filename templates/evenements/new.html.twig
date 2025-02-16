@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Evenements</title>
+    {% block styles %}
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 20px;
+                padding: 20px;
+            }
+
+            h1 {
+                color: #333;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .form-container {
+                background-color: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .form-container label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                color: #555;
+            }
+
+            .form-container input,
+            .form-container textarea,
+            .form-container select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+
+            .form-container button {
+                background-color: #007bff;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .form-container button:hover {
+                background-color: #0056b3;
+            }
+
+            .back-link {
+                display: inline-block;
+                margin-top: 20px;
+                color: #007bff;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+            .back-link:hover {
+                text-decoration: underline;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <h1>Create new Evenements</h1>
+
+        <div class="form-container">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                
+                <div class="form-group">
+                    {{ form_label(form.nom) }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.nom) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.description) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.Datedebut) }}
+                    {{ form_widget(form.Datedebut, {'attr': {'class': 'form-control'}}) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.Datedebut) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.Datefin) }}
+                    {{ form_widget(form.Datefin, {'attr': {'class': 'form-control'}}) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.Datefin) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.Lieu) }}
+                    {{ form_widget(form.Lieu, {'attr': {'class': 'form-control'}}) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.Lieu) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.categorie) }}
+                    {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.categorie) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.image) }}
+                    {{ form_widget(form.image, {'attr': {'class': 'form-control-file'}}) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.image) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn">{{ button_label|default('Save') }}</button>
+                </div>
+
+            {{ form_end(form) }}
+        </div>
+
+        <a class="back-link" href="{{ path('app_evenements_index') }}">Back to list</a>
+    {% endblock %}
+</body>
+</html>
