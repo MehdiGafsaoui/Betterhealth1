@@ -52,13 +52,16 @@
                                 <a class="nav-link" href="{{ path('app_about') }}">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_events') }}">Events</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_services') }}">Services</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_dondesang2') }}">Don De Sang</a>
+                            </li>
+                             <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_evenements_index') }}">evenements</a>
                             </li>
                             {% if app.user %}
                                     <li class="nav-item">
@@ -111,7 +114,7 @@
                             <h1>Best Care & Better Doctor</h1>
                             <p>Your health, our priority—trust in experienced and compassionate care.</p>
 {% if app.user %}
-    <a href="{{ path('app_appointment') }}" class="btn_2">Make an appointment</a>
+    <a href="{{ path('app_appointments') }}" class="btn_2">Make an appointment</a>
 {% else %}
     <a href="{{ path('app_register') }}" class="btn_2">Make an appointment</a>
 {% endif %}                        </div>

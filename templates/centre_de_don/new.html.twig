@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+{% block css %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+    <!-- Themify Icons CSS -->
+    <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="{{ asset('css/flaticon.css') }}">
+    <!-- Magnific Popup CSS -->
+    <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="{{ asset('css/nice-select.css') }}">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="{{ asset('css/slick.css') }}">
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="icon" href="{{ asset('img/favicon.png') }}">
+{% endblock %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ page_title ?? 'Default Title' }}{% endblock %}</title>
+</head>
+{% block header %}
+<header class="main_menu home_menu">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="navbar-brand" href="{{ path('app_home') }}"> <img src="{{ asset('img/logo.png') }}" alt="logo"> </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse main-menu-item justify-content-center"
+                        id="navbarSupportedContent">
+                        <ul class="navbar-nav align-items-center">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ path('app_home') }}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_about') }}">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_services') }}">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_dondesang2') }}">Don De Sang</a>
+                            </li>
+                             <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_evenements_index') }}">evenements</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <a class="btn_2 d-none d-lg-block" href="#" id="loginButton">Login</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+<div class="table-container">
+    <title>New CentreDeDon</title>
+
+    {% block body %}
+        <h1>Create new CentreDeDon</h1>
+
+        <div class="form-container">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-signin'}}) }}
+            
+                {{ form_row(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le nom du centre', 'minlength': '4'}}) }}
+                {{ form_row(form.address, {'attr': {'class': 'form-control', 'placeholder': 'Entrez l\'adresse du centre'}}) }}
+                {{ form_row(form.telephone, {'attr': {'class': 'form-control', 'placeholder': 'Ex: +21612345678'}}) }}
+                {{ form_row(form.email, {'attr': {'class': 'form-control', 'placeholder': 'exemple@exemple.com'}}) }}
+                {{ form_row(form.createdAt, {'attr': {'class': 'form-control', 'placeholder': 'YYYY-MM-DD HH:MM:SS'}}) }}
+                
+                <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+            
+            {{ form_end(form) }}
+        </div>
+
+        <a href="{{ path('app_centre_de_don_index') }}">back to list</a>
+    {% endblock %}
+</div>
+
+
+{% block footer %}
+
+    <!-- footer part start-->
+    <footer class="footer-area">
+        <div class="footer section_padding">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-xl-2 col-md-4 col-sm-6 single-footer-widget">
+                        <a href="#" class="footer_logo"> <img src="img/logo.png" alt="#"> </a>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor </p>
+                        <div class="social_logo">
+                            <a href="#"><i class="ti-facebook"></i></a>
+                            <a href="#"> <i class="ti-twitter"></i> </a>
+                            <a href="#"><i class="ti-instagram"></i></a>
+                            <a href="#"><i class="ti-skype"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-sm-6 col-md-4 single-footer-widget">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Department</a></li>
+                            <li><a href="#"> Online payment</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Department</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xl-2 col-sm-6 col-md-4 single-footer-widget">
+                        <h4>Explore</h4>
+                        <ul>
+                            <li><a href="#">In the community</a></li>
+                            <li><a href="#">IU health foundation</a></li>
+                            <li><a href="#">Family support </a></li>
+                            <li><a href="#">Business solution</a></li>
+                            <li><a href="#">Community clinic</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xl-2 col-sm-6 col-md-6 single-footer-widget">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Lights were season</a></li>
+                            <li><a href="#"> Their is let wherein</a></li>
+                            <li><a href="#">which given over</a></li>
+                            <li><a href="#">Without given She</a></li>
+                            <li><a href="#">Isn two signs think</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-md-6 single-footer-widget">
+                        <h4>Newsletter</h4>
+                        <p>Seed good winged wherein which night multiply
+                            midst does not fruitful</p>
+                        <div class="form-wrap" id="mc_embed_signup">
+                            <form target="_blank"
+                                action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                method="get" class="form-inline">
+                                <input class="form-control" name="EMAIL" placeholder="Your Email Address"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '"
+                                    required="" type="email">
+                                <button class="click-btn btn btn-default text-uppercase"> <i class="ti-angle-right"></i>
+                                </button>
+                                <div style="position: absolute; left: -5000px;">
+                                    <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""
+                                        type="text">
+                                </div>
+
+                                <div class="info"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </footer>
+{% endblock %}
+{% block jquery %}
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/custom.js"></script>
+    
+
+{% endblock %}
+<style>
+.table-container {
+    margin-top: 100px; /* Adjust according to your header height */
+    text-align: center; /* Centers the title */
+}
+
+.table {
+    margin: auto; /* Centers the table */
+}
+  body {
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        justify-content: flex-start; /* Align content to the top */
+        align-items: center; /* Horizontally center the form */
+        font-family: Arial, sans-serif;
+        padding-top: 30px; /* Add space between the top of the page and the form */
+    }
+
+    /* Container for the form */
+    .form-container {
+        width: 100%;
+        max-width: 500px; /* You can adjust this value to control the form size */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        margin-bottom: 20px; /* Add space between form and footer */
+    }
+
+    /* Optional: Styling for the heading */
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Styling for the form elements */
+    .form-control {
+        margin-bottom: 15px;
+    }
+
+    .btn-block {
+        width: 100%;
+    }
+
+    /* Ensure the footer is at the bottom of the page */
+    footer {
+        width: 100%;
+        background-color: #f8f9fa;
+        padding: 10px;
+        text-align: center;
+        position: relative;
+        bottom: 0;
+        margin-top: auto; /* Push footer to the bottom */
+    }
+</style>
