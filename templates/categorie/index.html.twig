@@ -23,7 +23,10 @@
                                 <td>{{ categorie.description }}</td>
                                 <td>
                                     <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}" class="btn btn-info btn-sm">Show</a>
+                                    {% if 'ROLE_ADMIN' in app.user.roles %}
                                     <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                                    {% endif %}
+
                                 </td>
                             </tr>
                         {% endfor %}
@@ -36,7 +39,10 @@
             </table>
 
             <div class="text-center">
+            {% if 'ROLE_ADMIN' in app.user.roles %}
                 <a href="{{ path('app_categorie_new') }}" class="btn btn-success">Create New</a>
+                {% endif %}
+
             </div>
         </div>
     </div>

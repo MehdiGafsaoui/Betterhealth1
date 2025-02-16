@@ -1,6 +1,6 @@
 {% extends 'client/index.html.twig' %}
 
-{% block title %}Détails de l'Événement{% endblock %}
+{% block title %}Details of the event{% endblock %}
 
 {% block styles %}
     <style>
@@ -10,6 +10,11 @@
             background-color: #f8f9fa;
             padding: 20px;
             margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
         }
 
         .container {
@@ -18,7 +23,8 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             max-width: 800px;
-            margin: 0 auto;
+            width: 100%; /* Ensures container takes full width within the max-width */
+            margin-top: 100px; /* /* Adds space from the top to avoid mixing with header */
         }
 
         h2 {
@@ -175,7 +181,7 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h2 class="mb-4">Détails de l'Événement</h2>
+        <h2 class="mb-4">Details </h2>
 
         <table class="table table-bordered">
             <tbody>
@@ -209,7 +215,7 @@
                         {% if evenement.image %}
                             <img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Image de l'événement" style="width: 200px; height: auto;">
                         {% else %}
-                            <span>Aucune image disponible</span>
+                            <span>not found</span>
                         {% endif %}
                     </td>
                 </tr>
@@ -217,9 +223,11 @@
         </table>
 
         <div class="d-flex justify-content-start">
-            <a href="{{ path('app_evenements_index') }}" class="btn btn-secondary">Retour à la liste</a>
-            <a href="{{ path('app_evenements_edit', {'id': evenement.id}) }}" class="btn btn-primary">Modifier</a>
-            
+            <a href="{{ path('app_evenements_index') }}" class="btn btn-secondary">Back to list</a>
+            {% if 'ROLE_ADMIN' in app.user.roles %}
+            <a href="{{ path('app_evenements_edit', {'id': evenement.id}) }}" class="btn btn-primary">Edit</a>
+            {% endif %}
+
             <!-- Formulaire de suppression stylisé -->
             <form action="{{ path('app_evenements_delete', {'id': evenement.id}) }}" method="post" style="display:inline;">
                 <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?');">Supprimer</button>
