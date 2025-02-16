@@ -1,0 +1,43 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block title %}Edit Appointment{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h1 class="text-center mb-4">Edit Appointment</h1>
+            <p class="text-center text-muted">Modify your service, date, or email.</p>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+                    <div class="mb-3">
+                        <label class="form-label">Select a Service</label>
+                        {{ form_widget(form.service, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Choose a Date</label>
+                        {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Your Email</label>
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success w-100">Save Changes</button>
+                    </div>
+
+                    {{ form_end(form) }}
+                    
+                    <div class="text-center mt-3">
+                        <a href="{{ path('rendezvous_list') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

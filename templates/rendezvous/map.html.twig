@@ -1,0 +1,12 @@
+{% extends 'Client/index.html.twig' %}
+{% block title %}Nearby Services{% endblock %}
+{% block body %}
+<h1>Find Nearby Services</h1>
+<div id="map" style="height: 400px;"></div>
+<script>
+var map = L.map('map').setView([36.8065, 10.1815], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+</script>
+{% endblock %}

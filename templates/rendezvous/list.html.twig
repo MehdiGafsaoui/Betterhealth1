@@ -1,0 +1,92 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block title %}Appointments List{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="title">Appointments</h1>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Email</th>
+                    <th>Actions</th> <!-- New column for action buttons -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for rdv in rendezvous %}
+                    <tr>
+                        <td>{{ rdv.service }}</td>
+                        <td>{{ rdv.date|date('Y-m-d H:i') }}</td>
+                        <td>{{ rdv.email }}</td>
+                        <td>
+                            <!-- Edit Button -->
+                            <a href="{{ path('rendezvous_edit', {'id': rdv.id}) }}" class="btn btn-warning btn-sm">
+                                Edit
+                            </a>
+                            <!-- Delete Button -->
+                            <form action="{{ path('rendezvous_delete', {'id': rdv.id}) }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ rdv.id) }}">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this appointment?');">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+.container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.table-responsive {
+    display: flex;
+    justify-content: center;
+}
+
+.table {
+    width: 80%;
+    border-collapse: collapse;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btn {
+    margin: 0 5px;
+}
+</style>
+{% endblock %}
