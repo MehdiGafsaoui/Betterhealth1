@@ -1,0 +1,53 @@
+{% block title %}{{ page_title }}{% endblock %}
+{% extends 'client/index.html.twig' %}
+
+{% block body %}
+<div class="wrapper">
+    <form method="post" class="form-signin">       
+        <h2 class="form-signin-heading">{{ page_title }}</h2>
+
+        {{ form_start(form) }}
+            {{ form_widget(form, {'attr': {'class': 'form-control'}}) }}
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Save</button>
+        {{ form_end(form) }}
+        
+        <a href="{{ path('admin_dashboard') }}" class="btn btn-lg btn-secondary btn-block mt-3">Back to Admin</a>
+    </form>
+</div>
+
+<style>
+body {
+    background: #eee !important;    
+}
+
+.wrapper {    
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+.form-signin {
+    max-width: 380px;
+    padding: 15px 35px 45px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.1);  
+}
+
+.form-signin-heading {
+    margin-bottom: 30px;
+}
+
+.form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'client/index.html.twig' %}
+
+{% block title %}Appointment{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Book an </h1>
+    <h1>Book an Appointment </h1>
+    <p>Welcome, {{ app.user.fullName }}! You can schedule an appointment here.</p>
+
+    <form action="{{ path('app_appointment') }}" method="post">
+        <div class="mb-3">
+            <label for="date" class="form-label">Select Date</label>
+            <input type="date" id="date" name="date" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="time" class="form-label">Select Time</label>
+            <input type="time" id="time" name="time" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Book Now</button>
+    </form>
+</div>
+{% endblock %}
