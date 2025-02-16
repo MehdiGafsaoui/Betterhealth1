@@ -1,52 +1,55 @@
 {# templates/exercice_mental/index.html.twig #}
-{% extends 'admin/admin.html.twig' %}
+{% extends 'Client/index.html.twig' %}
 
-{% block content %}
-<div class="container mt-4">
-  <div class="card shadow-sm">
-    <div class="card-header bg-primary text-white">
-      <h2 class="mb-0">Exercice Mental Index</h2>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Video URL</th>
-              <th>Titre</th>
-              <th>Description</th>
-              <th>Durée (minutes)</th>
-              <th>Objectif</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for exercice_mental in exercice_mentals %}
-            <tr>
-              <td>{{ exercice_mental.id }}</td>
-              <td>{{ exercice_mental.videoUrl }}</td>
-              <td>{{ exercice_mental.titre }}</td>
-              <td>{{ exercice_mental.description }}</td>
-              <td>{{ exercice_mental.dureeMinutes }}</td>
-              <td>{{ exercice_mental.objectif }}</td>
-              <td>
-                <a href="{{ path('app_exercice_mental_show', {'id': exercice_mental.id}) }}" class="btn btn-info btn-sm">Show</a>
-                <a href="{{ path('app_exercice_mental_edit', {'id': exercice_mental.id}) }}" class="btn btn-warning btn-sm">Edit</a>
-              </td>
-            </tr>
-            {% else %}
-            <tr>
-              <td colspan="7" class="text-center">No records found</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+{% block body %}
+<div class="d-flex justify-content-center mt-5 pt-5"> {# Added margin and padding to move content down #}
+  <div class="container w-75"> {# Adjust width as needed #}
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h2 class="mb-0 text-center">Exercice Mental Index</h2>
       </div>
-    </div>
-    <div class="card-footer text-end">
-      <a href="{{ path('app_exercice_mental_new') }}" class="btn btn-success">Create new</a>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Video URL</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Durée (minutes)</th>
+                <th>Objectif</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for exercice_mental in exercice_mentals %}
+              <tr>
+                <td>{{ exercice_mental.id }}</td>
+                <td>{{ exercice_mental.videoUrl }}</td>
+                <td>{{ exercice_mental.titre }}</td>
+                <td>{{ exercice_mental.description }}</td>
+                <td>{{ exercice_mental.dureeMinutes }}</td>
+                <td>{{ exercice_mental.objectif }}</td>
+                <td>
+                  <a href="{{ path('app_exercice_mental_show', {'id': exercice_mental.id}) }}" class="btn btn-info btn-sm">Show</a>
+                  <a href="{{ path('app_exercice_mental_edit', {'id': exercice_mental.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                </td>
+              </tr>
+              {% else %}
+              <tr>
+                <td colspan="7" class="text-center">No records found</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer text-end">
+        <a href="{{ path('app_exercice_mental_new') }}" class="btn btn-success">Create new</a>
+      </div>
     </div>
   </div>
 </div>
 {% endblock %}
+

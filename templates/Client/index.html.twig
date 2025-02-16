@@ -52,16 +52,16 @@
                                 <a class="nav-link" href="{{ path('app_about') }}">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_services') }}">Services</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_dondesang2') }}">Don De Sang</a>
                             </li>
                              <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_evenements_index') }}">evenements</a>
+                                <a class="nav-link" href="{{ path('app_evenements_index') }}">Evenements</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_therapie_index') }}">Therapie</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_dondesang') }}">Don De Produit medicale</a>
                             </li>
                             {% if app.user %}
                                     <li class="nav-item">
@@ -150,12 +150,10 @@
                 </div>
                 <div class="col-md-6 col-lg-5">
                     <div class="about_us_text">
-                        <h2>About us</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed
-                            do eiusmod tempor incididunt ut labore et dolore magna aliqua
-                            Quis ipsum suspendisse ultrices gravida. Risus cmodo viverra
-                            maecenas accumsan lacus vel</p>
-                        <a class="btn_2 " href="#">learn more</a>
+                        <h2>Santé Mentale</h2>
+                        <p>
+Des outils pour le bien-être mental avec des contenus personnalisés et des rendez-vous sécurisés.</p>
+                        <a class="btn_2 " href="{{ path('app_exercice_mental_index') }}">learn more</a>
                         <div class="banner_item">
                             <div class="single_item">
                                 <img src="img/icon/banner_1.svg" alt="">
