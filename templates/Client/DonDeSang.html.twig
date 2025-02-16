@@ -36,7 +36,11 @@
                     <div class="card-body">
                         <h5 class="card-title">Donate Blood</h5>
                         <p class="card-text">Be a hero! Schedule your blood donation now.</p>
+                        {% if app.user %}
                         <a href="{{ path('app_demande_don_sang_new') }}" class="btn btn-danger">Donate Now</a>
+                        {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-danger">Donate Now</a>
+                        {% endif %} 
                     </div>
                 </div>
             </div>

@@ -56,7 +56,12 @@
                         </td>
                         <td>
                             <a href="{{ path('app_evenements_show', {'id': evenement.id}) }}" class="btn btn-show">Show</a>
+                            {% if app.user %}
+                            {% if 'ROLE_ADMIN' in app.user.roles %}
                             <a href="{{ path('app_evenements_edit', {'id': evenement.id}) }}" class="btn btn-edit">Edit</a>
+                            {% endif %}
+                            {% endif %} 
+
                         </td>
                     </tr>
                 {% else %}
@@ -70,7 +75,10 @@
 
     <!-- Centering the "Create new" button -->
     <div class="text-center" style="margin-top: 20px;">
+    {% if 'ROLE_ADMIN' in app.user.roles %}
         <a href="{{ path('app_evenements_new') }}" class="btn btn-primary">Create new</a>
+        {% endif %}
+
     </div>
 
     <!-- Styles for the buttons and header -->
@@ -94,11 +102,11 @@
         }
 
         .btn-edit {
-            background-color: #007bff;
+            background-color:rgb(80, 137, 198);
         }
 
         .btn-edit:hover {
-            background-color: #0056b3;
+            background-color:rgb(97, 22, 2);
         }
 
         .btn-primary {
@@ -111,7 +119,7 @@
 
         /* Custom style for the header row */
         .table-header th {
-            background-color: blue;
+            background-color: rgb(63, 110, 160);
             color: white;
         }
 

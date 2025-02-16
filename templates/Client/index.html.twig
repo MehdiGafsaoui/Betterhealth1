@@ -52,7 +52,9 @@
                                 <a class="nav-link" href="{{ path('app_about') }}">About</a>
                             </li>
                             <li class="nav-item">
+                            {% if app.user %}
                                 <a class="nav-link" href="{{ path('app_dondesang2') }}">Blood donation</a>
+                                
                             </li>
                              <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_evenements_index') }}">Events</a>
@@ -63,6 +65,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_dondesang') }}">Charity</a>
                             </li>
+                            {% endif %} 
                             {% if app.user %}
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ path('app_profile') }}">Profile</a>

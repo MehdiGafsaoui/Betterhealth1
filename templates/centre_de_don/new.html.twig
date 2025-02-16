@@ -1,75 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-{% block css %}
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <!-- Animate CSS -->
-    <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
-    <!-- Owl Carousel CSS -->
-    <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
-    <!-- Themify Icons CSS -->
-    <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
-    <!-- Flaticon CSS -->
-    <link rel="stylesheet" href="{{ asset('css/flaticon.css') }}">
-    <!-- Magnific Popup CSS -->
-    <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
-    <!-- Nice Select CSS -->
-    <link rel="stylesheet" href="{{ asset('css/nice-select.css') }}">
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="{{ asset('css/slick.css') }}">
-    <!-- Custom Style CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="icon" href="{{ asset('img/favicon.png') }}">
-{% endblock %}
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ page_title ?? 'Default Title' }}{% endblock %}</title>
-</head>
-{% block header %}
-<header class="main_menu home_menu">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-12">
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand" href="{{ path('app_home') }}"> <img src="{{ asset('img/logo.png') }}" alt="logo"> </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse main-menu-item justify-content-center"
-                        id="navbarSupportedContent">
-                        <ul class="navbar-nav align-items-center">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{ path('app_home') }}">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_about') }}">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_services') }}">Services</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_dondesang2') }}">Don De Sang</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_evenements_index') }}">evenements</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <a class="btn_2 d-none d-lg-block" href="#" id="loginButton">Login</a>
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
+{% extends 'Client/index.html.twig' %}
 {% endblock %}
 <div class="table-container">
     <title>New CentreDeDon</title>
@@ -92,68 +21,8 @@
         </div>
 
         <a href="{{ path('app_centre_de_don_index') }}">back to list</a>
-    {% endblock %}
-</div>
-
-
-{% block footer %}
-
-    <!-- footer part start-->
-   <footer class="footer-area">
-    <div class="footer section_padding">
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-xl-3 col-md-6 col-sm-6 single-footer-widget">
-                    <a href="#" class="footer_logo"> 
-                        <img src="img/logo.png" alt="Logo"> 
-                    </a>
-                    <p>Avengers et BetterHealth - Votre santé, notre mission.</p>
-                    <div class="social_logo">
-                        <a href="#"><i class="ti-facebook"></i></a>
-                        <a href="#"><i class="ti-twitter"></i></a>
-                        <a href="#"><i class="ti-instagram"></i></a>
-                        <a href="#"><i class="ti-skype"></i></a>
-                    </div>
-                </div>
-                <div class="col-xl-5 col-md-6 col-sm-6 single-footer-widget text-center">
-                    <h4 style="color: #0056b3;">Informations de Contact</h4>
-                    <p style="color: #0056b3; font-size: 18px;">
-                        Rue de Newton, Tunis - Esprit Ingénieur<br>
-                        Équipe et Contact : <strong>70 378 098</strong><br>
-                        <em>Nous sommes ici pour vous</em>
-                    </p>
-                </div>
-                <div class="col-xl-4 col-md-6 col-sm-6 single-footer-widget">
-                    <h4>Liens Utiles</h4>
-                    <ul>
-                        <li><a href="#">À propos de nous</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Carrières</a></li>
-                        <li><a href="#">Contactez-nous</a></li>
-                    </ul>
-                </div>
-            </div>
         </div>
-    </div>
-</footer>
-<!-- footer part end-->
-{% endblock %}
-{% block jquery %}
-    <script src="js/jquery-1.12.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.form.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/mail-script.js"></script>
-    <script src="js/contact.js"></script>
-    <script src="js/custom.js"></script>
-    
-
-{% endblock %}
-<style>
+        <style>
 .table-container {
     margin-top: 100px; /* Adjust according to your header height */
     text-align: center; /* Centers the title */
@@ -210,3 +79,10 @@
         margin-top: auto; /* Push footer to the bottom */
     }
 </style>
+    {% endblock %}
+
+
+
+{% block Styke %}
+
+{% endblock %}
