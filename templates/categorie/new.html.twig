@@ -1,0 +1,24 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="w-100">
+            <h1 class="text-center my-4">Create New Categorie</h1>
+
+            <div class="form-container">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-signin'}}) }}
+                
+                {{ form_row(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom de la catégorie', 'minlength': '3'}}) }}
+                {{ form_row(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Description de la catégorie'}}) }}
+            
+                <button type="submit" class="btn btn-success w-100 mt-4">➕ Add Category</button>
+
+                {{ form_end(form) }}
+            </div>
+
+            <div class="mt-4 text-center">
+                <a href="{{ path('app_categorie_index') }}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

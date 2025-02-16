@@ -1,0 +1,17 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block body %}
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="w-25 p-4 border rounded shadow bg-light" style="max-height: 500px; overflow-y:auto;">
+            <h1 class="my-4 text-center">Edit Produit</h1>
+
+            {{ include('produit/_form.html.twig', {'button_label': 'Update'}) }}
+
+            <div class="mt-4 text-center">
+                <a href="{{ path('app_produit_index') }}" class="btn btn-secondary">Back to List</a>
+            </div>
+
+            {{ include('produit/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
