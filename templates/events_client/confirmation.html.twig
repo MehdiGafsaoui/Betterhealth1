@@ -1,0 +1,52 @@
+{% extends 'client/index.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center">Confirmation de participation</h1>
+        <div class="alert alert-success text-center">
+            Votre participation à l'événement <strong>{{ evenement.nom }}</strong> a été enregistrée avec succès.
+        </div>
+
+        <h2 class="text-center">Détails de l'événement</h2>
+        <table class="table table-bordered mx-auto" style="width: 80%;">
+            <tbody>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ evenement.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ evenement.description }}</td>
+                </tr>
+                <tr>
+                    <th>Date de début</th>
+                    <td>{{ evenement.Datedebut ? evenement.Datedebut|date('Y-m-d') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de fin</th>
+                    <td>{{ evenement.Datefin ? evenement.Datefin|date('Y-m-d') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Lieu</th>
+                    <td>{{ evenement.Lieu }}</td>
+                </tr>
+                <tr>
+                    <th>Image</th>
+                    <td>
+                        {% if evenement.image %}
+                            <img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Image de l'événement" style="width: 100px; height: auto;">
+                        {% else %}
+                            <span>Pas d'image</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center mt-4">
+            <a href="{{ path('app_events_client') }}" class="btn btn-primary">
+                Retour à la liste des événements
+            </a>
+        </div>
+    </div>
+{% endblock %}
