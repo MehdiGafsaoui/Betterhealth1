@@ -1,0 +1,52 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block title %}Produit Index{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="w-75 p-4 border rounded shadow bg-light" style="max-height: 80vh; overflow-y: auto;">
+            <h1 class="my-4 text-center">Produit Index</h1>
+
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Quantite</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if produits|length > 0 %}
+                        {% for produit in produits %}
+                            <tr>
+                                <th scope="row">{{ produit.id }}</th>
+                                <td>{{ produit.nom }}</td>
+                                <td>{{ produit.description }}</td>
+                                <td>{{ produit.quantite }}</td>
+                                <td>
+                                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn btn-info btn-sm">Show</a>
+                                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center">No records found</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+            <a href="{{ path('app_produit_new') }}" class="btn btn-success d-block mx-auto">Create New</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}
+

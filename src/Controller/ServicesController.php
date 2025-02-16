@@ -14,4 +14,11 @@ class ServicesController extends AbstractController
             'page_title' => 'Services',
         ]);
     }
+    #[Route('/donproduit', name: 'app_dondesang')]
+    public function dondesang(): Response
+    {
+        return $this->render('client/donproduit.html.twig', [
+            'page_title' => 'Blood Donation',
+        ]);
+    }
 }
