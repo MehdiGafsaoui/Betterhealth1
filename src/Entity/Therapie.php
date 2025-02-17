@@ -6,6 +6,7 @@ use App\Repository\TherapieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TherapieRepository::class)]
 class Therapie
@@ -16,21 +17,31 @@ class Therapie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Ce champ est obligatoire.')]
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Ce champ est obligatoire.')]
+    #[Assert\Length(min: 3, minMessage: 'Le nom doit comporter au moins 3 caractères')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'La description est obligatoire.')]
+    #[Assert\Length(min: 10, minMessage: 'La description doit comporter au moins 10 caractères')]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'L\'objectif est obligatoire.')]
+    #[Assert\Length(min: 5, minMessage: 'L\'objectif doit comporter au moins 5 caractères')]
     private ?string $objectif = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'La durée est obligatoire.')]
+    #[Assert\Regex(pattern: '/^\d+$/', message: 'La durée doit être un nombre entier positif')]
     private ?string $duree = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le type est obligatoire.')]
     private ?string $type = null;
 
     /**
