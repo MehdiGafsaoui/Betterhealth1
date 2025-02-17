@@ -25,9 +25,8 @@ class DemandeDonSang
     private ?float $quantite = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Le statut est requis.")]
-    #[Assert\Choice(choices: ["En attente", "Approuvé", "Rejeté"], message: "Statut invalide.")]
     private ?string $status = null;
+    
 
     #[ORM\ManyToOne]
     #[Assert\NotNull(message: "L'utilisateur est requis.")]
