@@ -1,27 +1,55 @@
 {% extends 'Client/index.html.twig' %}
 
-<div class="table-container">
-<title>Edit DemandeDonSang</title>
-
 {% block body %}
+
+<div class="table-container">
+    <title>Edit DemandeDonSang</title>
     <h1>Edit DemandeDonSang</h1>
 
     {{ include('demande_don_sang/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_demande_don_sang_index') }}">back to list</a>
+    <a href="{{ path('app_demande_don_sang_index') }}" class="back-link">back to list</a>
 
     {{ include('demande_don_sang/_delete_form.html.twig') }}
-    </div>
-    <style>
+</div>
+
+<style>
 .table-container {
     margin-top: 100px; /* Adjust according to your header height */
-    text-align: center; /* Centers the title */
+    padding: 40px 20px; /* Add padding around the content */
+    background-color: #f8f9fa; /* Light background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    max-width: 800px; /* Limit the container width */
+    margin-left: auto;
+    margin-right: auto; /* Centers the container */
+    text-align: center; /* Centers the content */
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 30px; /* Space below the heading */
+    color: #333; /* Dark text color for contrast */
+}
+
+.back-link {
+    margin-top: 20px;
+    display: inline-block;
+    color: #007bff; /* Blue color for the link */
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+    color: #0056b3; /* Darker blue on hover */
 }
 
 .table {
     margin: auto; /* Centers the table */
 }
 </style>
+
 {% endblock %}
 {% block style %}
 
