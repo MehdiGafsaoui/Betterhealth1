@@ -18,7 +18,6 @@
                             <th>Objectif</th>
                             <th>Duree</th>
                             <th>Type</th>
-                            <th>QrCode</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -38,10 +37,6 @@
                             <td>{{ therapie.objectif }}</td>
                             <td>{{ therapie.duree }}</td>
                             <td>{{ therapie.type }}</td>
-                                <td>
-                                    <img src="{{ asset('/uploads/qrcode/therapie-' ~ therapie.id ~ '.png') }}" alt="{{ therapie.nom }}" style="max-height:200px;">
-                                </td>
-                                
                             <td>
                                 <a href="{{ path('app_therapie_show', {'id': therapie.id}) }}" class="btn btn-info btn-sm">Show</a>
                                 <a href="{{ path('app_therapie_edit', {'id': therapie.id}) }}" class="btn btn-warning btn-sm">Edit</a>
