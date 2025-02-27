@@ -107,196 +107,37 @@
 {% endblock %}
 
 {% block body %}
-<div class="cards-container">
-           <a href="{{ path('app_demande_don_sang_index', {personal: 'true'}) }}" class="btn btn-personal">
-           <i class="fas fa-user"></i>  Personal Requests
-        </a>
-    <!-- Dropdown form for filtering by status -->
-        <form method="get" action="{{ path('app_demande_don_sang_index') }}" class="filter-form">
-            <label for="status">Filter by Status:</label>
-            <select name="status" id="status" onchange="this.form.submit()">
-                <option value="">All</option>
-                <option value="pending" {% if app.request.query.get('status') == 'pending' %}selected{% endif %}>Pending</option>
-                <option value="accepted" {% if app.request.query.get('status') == 'accepted' %}selected{% endif %}>accepted</option>
-                <option value="refused" {% if app.request.query.get('status') == 'refused' %}selected{% endif %}>refused</option>
-            </select>
-        </form>
-        {% for demande_don_sang in demande_don_sangs %}
-            <div class="card">
-                <div class="card-img" style="background-image: url('{{ asset('img/blooddonation.png') }}');"></div>
-                <div class="card-content">
-                    <a href="{{ path('app_demande_don_sang_show', {id: demande_don_sang.id}) }}">
-                        <h2>{{ demande_don_sang.groupesanguain }}</h2>
-                        <p>Created At: {{ demande_don_sang.createdAt|date('d/m/Y') }}</p>
-                        <p>Status: {{ demande_don_sang.status }}</p>
-                        <p>{{ demande_don_sang.CentreDeDon.name }}</p>
-                    </a>
-                </div>
+    <div class="cards-container">
+        <div class="card hover">
+            <div class="card-img" style="background-image: url('{{ asset('img/blooddonation.png') }}');"></div>
+            <div class="card-content">
+                <a href="#!">
+                    <h2>Title</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur, lorem ipsum dolor</p>
+                </a>
             </div>
-        {% else %}
-            <p>No records found</p>
-        {% endfor %}
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('{{ asset('img/blooddonation.png') }}');"></div>
+            <div class="card-content">
+                <a href="#!">
+                    <h2>Title</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur, lorem ipsum dolor</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img" style="background-image: url('{{ asset('img/blooddonation.png') }}');"></div>
+            <div class="card-content">
+                <a href="#!">
+                    <h2>Title</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur, lorem ipsum dolor</p>
+                </a>
+            </div>
+        </div>
     </div>
-    <!-- Charts Section -->
-    <div class="charts-container">
-    <div class="chart-block">
-        <h2>Donations Per Month</h2>
-        <canvas id="donsParMois"></canvas>
-    </div>
-    <div class="chart-block small-chart">
-        <h2>Donations Per Blood Group</h2>
-        <canvas id="donsParGroupe"></canvas>
-    </div>
-    <div class="chart-block">
-        <h2>Donations Per Center</h2>
-        <canvas id="donsParCentre"></canvas>
-    </div>
-</div>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        async function fetchData(url) {
-            const response = await fetch(url);
-            return await response.json();
-        }
-
-        async function renderCharts() {
-            // Données des dons par mois
-            const donsParMois = await fetchData('/api/statistiques/dons-par-mois');
-            new Chart(document.getElementById('donsParMois'), {
-                type: 'bar',
-                data: {
-                    labels: donsParMois.map(d => d.mois),
-                    datasets: [{
-                        label: 'Dons par mois',
-                        data: donsParMois.map(d => d.total),
-                        backgroundColor: 'blue'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-
-            // Données des dons par groupe sanguin
-            const donsParGroupe = await fetchData('/api/statistiques/dons-par-groupe');
-            new Chart(document.getElementById('donsParGroupe'), {
-                type: 'pie',
-                data: {
-                    labels: donsParGroupe.map(d => d.groupe),
-                    datasets: [{
-                        data: donsParGroupe.map(d => d.total),
-                        backgroundColor: ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'cyan']
-                    }]
-                }
-            });
-
-            // Données des dons par centre
-            const donsParCentre = await fetchData('/api/statistiques/dons-par-centre');
-            new Chart(document.getElementById('donsParCentre'), {
-                type: 'bar',
-                data: {
-                    labels: donsParCentre.map(d => d.centre),
-                    datasets: [{
-                        label: 'Dons par centre',
-                        data: donsParCentre.map(d => d.total),
-                        backgroundColor: 'purple'
-                    }]
-                }
-            });
-        }
-
-        renderCharts();
-    </script>
-
-    <style>
-        .btn-personal {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 4px 8px; /* Very small padding */
-        background-color: rgb(157, 209, 205); /* Your custom color */
-        color: white;
-        text-decoration: none;
-        border-radius: 3px; /* Smaller border radius */
-        margin-bottom: 10px; /* Reduced margin */
-        font-size: 12px; /* Smaller font size */
-        font-weight: 500; /* Normal font weight */
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Smaller shadow */
-        border: none; /* Remove default border */
-        cursor: pointer; /* Add pointer cursor for better UX */
-        height: auto; /* Ensure height is not forced */
-        line-height: 1; /* Tight line height */
-    }
-
-    .btn-personal:hover {
-        background-color: rgb(137, 189, 185); /* Slightly darker shade on hover */
-        transform: translateY(-1px); /* Smaller lift on hover */
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
-    }
-
-    .btn-personal:active {
-        transform: translateY(0); /* Reset transform on click */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Reset shadow on click */
-    }
-
-    .btn-personal i {
-        margin-right: 6px; /* Smaller margin for the icon */
-        font-size: 12px; /* Smaller icon size */
-    }
-
-       
-        /* Dropdown form */
-        .filter-form {
-            margin-bottom: 20px;
-        }
-
-        .filter-form label {
-            margin-right: 10px;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .filter-form select {
-            padding: 8px 12px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-            background-color: white;
-            cursor: pointer;
-            transition: border-color 0.3s ease;
-        }
-
-        .filter-form select:hover {
-            border-color: #28a745; /* Green color */
-        }
-
-    .charts-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        margin-top: 20px;
-    }
-
-    .chart-block {
-        text-align: center;
-        width: 80%;
-    }
-    .small-chart {
-        width: 30%; }
-
-    canvas {
-        width: 100% !important;
-        height: 400px !important;
-    }
-    .small-chart canvas {
-        height: 300px !important; }
-</style>
 {% endblock %}
 
 
@@ -319,13 +160,13 @@
         .cards-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: center; /* Centers the cards horizontally */
             gap: 1rem;
-            margin-top: 150px;
+             /* Space between cards */
         }
 
         .card {
-            width: 250px;
+            width: 250px; /* Set smaller width for cards */
             display: inline-block;
             margin: 1rem;
             border-radius: 4px;
@@ -346,15 +187,55 @@
             border-color: #ccb65e;
         }
 
-        .card .card-img {
+        .card .card-img .overlay {
+            background-color: rgba(25,29,38,.85);
+            transition: opacity .2s ease;
+            opacity: 1;
+        }
+
+        .card-img {
             position: relative;
-            height: 200px;
+            height: 200px; /* Adjust height of card image */
             width: 100%;
             background-color: #fff;
             transition: opacity .2s ease;
             background-position: center center;
             background-repeat: no-repeat;
             background-size: cover;
+        }
+
+        .card-img .overlay {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            opacity: 0;
+        }
+
+        .card-img .overlay .overlay-content {
+            line-height: 200px; /* Adjusted for the new height */
+            width: 100%;
+            text-align: center;
+            color: #fff;
+        }
+
+        .card-img .overlay .overlay-content a {
+            color: #fff;
+            padding: 0 2rem;
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,.4);
+            height: 40px;
+            line-height: 40px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .card-img .overlay .overlay-content a:hover, .card-img .overlay .overlay-content a.hover {
+            background: #ccb65e;
+            border-color: #ccb65e;
         }
 
         .card-content {
@@ -389,18 +270,16 @@
     </style>
 {% endblock %}
 
+
+
 {% block javascripts %}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Add jQuery if not already included -->
     <script>
         $(document).ready(function() {
-            $('.card').hover(
-                function() {
-                    $(this).addClass('hover');
-                },
-                function() {
-                    $(this).removeClass('hover');
-                }
-            );
+            $('.card').delay(1800).queue(function(next) {
+                $(this).removeClass('hover');
+                $('a.hover').removeClass('hover');
+                next();
+            });
         });
     </script>
 {% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block body %}
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>OpenStreetMap Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- Use a working version of Leaflet Control Search from GitHub -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css"/>
+    <style>
+      #map {
+        height: 600px; /* Adjusted height to make the map smaller */
+      }
+      html, body {
+        height: 100%;
+        margin-top: 40px;   /* Space above the element */
+        margin-right: 20px; /* Space to the right of the element */
+        margin-bottom: 0px; /* Space below the element */
+        margin-left: 25px;
+      }
+      /* Ensures the search bar appears */
+      .leaflet-control-search {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Use the updated working version of Leaflet Control Search JS -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.js"></script>
+    <script>
+      // Initialize the map centered on Tunis Centre
+      var map = L.map('map').setView([36.8000, 10.1800], 9); // Default coordinates for Tunis Centre
+
+      // Use OpenStreetMap tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      // Locations of donation centers
+      var centers = [
+        { name: "Centre de Don de Ariana", lat: 36.8607, lng: 10.1933 },
+        { name: "Centre de Don de Tunis", lat: 36.8000, lng: 10.1800 },  // Coordinates for Tunis Centre
+        { name: "Centre de Don de Nabeul", lat: 36.4500, lng: 10.7380 },  // Coordinates for Nabeul
+      ];
+
+      // Create a layer group to hold all the markers
+      var markersLayer = L.layerGroup().addTo(map);
+      
+      // Add markers for each center and store the markers for search functionality
+      centers.forEach(function(center) {
+        var marker = L.marker([center.lat, center.lng]).addTo(markersLayer)
+          .bindPopup(center.name);
+      });
+
+      // Add the search control to the map
+      var searchControl = new L.Control.Search({
+        layer: markersLayer,  // Search the markers layer
+        propertyName: 'name',  // The property to search (marker name)
+        initial: false,  // Don't show search results initially
+        zoom: 12  // Set zoom level on result
+      });
+
+      map.addControl(searchControl);  // Add search control to the map
+    </script>
+  </body>
+  </html>
+{% endblock %}

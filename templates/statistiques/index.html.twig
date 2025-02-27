@@ -1,0 +1,86 @@
+{% extends 'client/index.html.twig' %}
+
+{% block title %} Statistiques des dons {% endblock %}
+
+{% block body %}
+    <h1>Statistiques des dons</h1>
+
+    <div class="charts-container">
+        <canvas id="donsParMois"></canvas>
+        <canvas id="donsParGroupe"></canvas>
+        <canvas id="donsParCentre"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        async function fetchData(url) {
+            const response = await fetch(url);
+            return await response.json();
+        }
+
+        async function renderCharts() {
+            // Données des dons par mois
+            // Données des dons par mois
+            const donsParMois = await fetchData('/api/statistiques/dons-par-mois');
+            new Chart(document.getElementById('donsParMois'), {
+                type: 'bar', // Change to 'bar' for a bar chart
+                data: {
+                    labels: donsParMois.map(d => d.mois),
+                    datasets: [{
+                        label: 'Dons par mois',
+                        data: donsParMois.map(d => d.total),
+                        backgroundColor: 'blue' // You can change the color here
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Données des dons par groupe sanguin
+            const donsParGroupe = await fetchData('/api/statistiques/dons-par-groupe');
+            new Chart(document.getElementById('donsParGroupe'), {
+                type: 'pie',
+                data: {
+                    labels: donsParGroupe.map(d => d.groupe),
+                    datasets: [{
+                        data: donsParGroupe.map(d => d.total),
+                        backgroundColor: ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'cyan']
+                    }]
+                }
+            });
+
+            // Données des dons par centre
+            const donsParCentre = await fetchData('/api/statistiques/dons-par-centre');
+            new Chart(document.getElementById('donsParCentre'), {
+                type: 'bar',
+                data: {
+                    labels: donsParCentre.map(d => d.centre),
+                    datasets: [{
+                        label: 'Dons par centre',
+                        data: donsParCentre.map(d => d.total),
+                        backgroundColor: 'purple'
+                    }]
+                }
+            });
+        }
+
+        renderCharts();
+    </script>
+
+    <style>
+        .charts-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+             margin-top: 20px;
+        }
+
+        canvas {
+            width: 400px !important;
+            height: 500px !important;
+        }
+    </style>
+{% endblock %}
