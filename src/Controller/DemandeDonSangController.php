@@ -5,33 +5,60 @@ namespace App\Controller;
 use App\Entity\DemandeDonSang;
 use App\Form\DemandeDonSangType;
 use App\Repository\DemandeDonSangRepository;
+use App\Repository\CentreDeDonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
 
 #[Route('/demande/don/sang')]
 final class DemandeDonSangController extends AbstractController
 {
     #[Route(name: 'app_demande_don_sang_index', methods: ['GET'])]
-    public function index(DemandeDonSangRepository $demandeDonSangRepository): Response
-    {
+    public function index(Request $request, DemandeDonSangRepository $demandeDonSangRepository ,CentreDeDonRepository $centreDeDonRepository,): Response
+    { $demandeDonSangs = $demandeDonSangRepository->findAll();
+
+        // Get the status from the request query parameters
+        $status = $request->query->get('status');
+        $user = $this->getUser();
+        $showPersonalRequests = $request->query->get('personal') === 'true';
+
+        // Fetch demandeDonSangs based on the selected filter
+        if ($showPersonalRequests && $user) {
+            // Filter by user (personal requests)
+            $demandeDonSangs = $demandeDonSangRepository->findByUser($user->getId());
+        } elseif ($status) {
+            // Filter by status
+            $demandeDonSangs = $demandeDonSangRepository->findByStatus($status);
+        } else {
+            // No filter: show all
+            $demandeDonSangs = $demandeDonSangRepository->findAll();
+        }
+    
         return $this->render('demande_don_sang/index.html.twig', [
-            'demande_don_sangs' => $demandeDonSangRepository->findAll(),
+            'demande_don_sangs' => $demandeDonSangs,
+            'showPersonalRequests' => $showPersonalRequests,
+            'selectedStatus' => $status,
         ]);
     }
-
     #[Route('/new', name: 'app_demande_don_sang_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,MailerInterface $mailer ): Response
     {
         $demandeDonSang = new DemandeDonSang();
+        $demandeDonSang->setStatus('pending');
+        $user = $this->getUser();
+        $demandeDonSang->setUser($user);
         $form = $this->createForm(DemandeDonSangType::class, $demandeDonSang);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($demandeDonSang);
             $entityManager->flush();
+            
 
             return $this->redirectToRoute('app_demande_don_sang_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -78,4 +105,7 @@ final class DemandeDonSangController extends AbstractController
 
         return $this->redirectToRoute('app_demande_don_sang_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    
 }

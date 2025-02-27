@@ -26,6 +26,9 @@ class DemandeDonSang
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
+
+    #[ORM\Column(type: "datetime",nullable: true)]
+private ?\DateTimeInterface $createdAt = null;
     
 
     #[ORM\ManyToOne]
@@ -100,4 +103,14 @@ class DemandeDonSang
 
         return $this;
     }
+    public function getCreatedAt(): ?\DateTimeInterface
+{
+    return $this->createdAt;
+}
+
+public function setCreatedAt(\DateTimeInterface $createdAt): static
+{
+    $this->createdAt = $createdAt;
+    return $this;
+}
 }

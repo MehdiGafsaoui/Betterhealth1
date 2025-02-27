@@ -35,4 +35,18 @@ class ServicesController extends AbstractController
             'page_title' => 'Blood Donation',
         ]);
     }
+    #[Route('/map', name: 'app_map')]
+    public function maps(): Response
+    {
+        return $this->render('centre_de_don/map.html.twig', [
+            'page_title' => 'Blood Donation',
+        ]);
+    }
+    #[Route('/cards', name: 'app_card')]
+    public function cards(): Response
+    {
+        return $this->render('demande_don_sang/view.html.twig', [
+            'page_title' => 'Blood Donation',
+        ]);
+    }
 }

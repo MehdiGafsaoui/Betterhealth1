@@ -2,34 +2,37 @@
 
 {% block body %}
 
-<div class="table-container">
+<div class="edit-container">
     <title>Edit DemandeDonSang</title>
     <h1>Edit DemandeDonSang</h1>
 
     {{ include('demande_don_sang/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_demande_don_sang_index') }}" class="back-link">back to list</a>
-
-    {{ include('demande_don_sang/_delete_form.html.twig') }}
+    <div class="links">
+        <a href="{{ path('app_demande_don_sang_index') }}" class="back-link">Back to List</a>
+        {{ include('demande_don_sang/_delete_form.html.twig') }}
+    </div>
 </div>
 
 <style>
-.table-container {
+.edit-container {
     margin-top: 100px; /* Adjust according to your header height */
-    padding: 40px 20px; /* Add padding around the content */
-    background-color: #f8f9fa; /* Light background color */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
-    max-width: 800px; /* Limit the container width */
+    padding: 40px 30px; /* Add more padding around the content */
+    background-color: #ffffff; /* White background */
+    border-radius: 12px; /* Rounded corners for modern look */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Soft, subtle shadow */
+    max-width: 900px; /* Make the container a bit wider */
     margin-left: auto;
-    margin-right: auto; /* Centers the container */
-    text-align: center; /* Centers the content */
+    margin-right: auto; /* Center the container */
+    text-align: center; /* Center the content */
+    font-family: 'Arial', sans-serif; /* Clean, modern font */
 }
 
 h1 {
-    font-size: 2rem;
-    margin-bottom: 30px; /* Space below the heading */
-    color: #333; /* Dark text color for contrast */
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    color: #333333; /* Darker color for the title */
+    font-weight: 600; /* Slightly bolder title */
 }
 
 .back-link {
@@ -37,20 +40,69 @@ h1 {
     display: inline-block;
     color: #007bff; /* Blue color for the link */
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #f0f8ff; /* Light blue background */
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2); /* Slight shadow for button effect */
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .back-link:hover {
-    text-decoration: underline;
-    color: #0056b3; /* Darker blue on hover */
+    background-color: #007bff; /* Darker blue when hovering */
+    color: white; /* White text on hover */
+    text-decoration: none;
 }
 
-.table {
-    margin: auto; /* Centers the table */
+.links {
+    margin-top: 30px; /* Space between the links and the form */
+}
+
+.table-container {
+    max-width: 800px; /* Limit table width */
+    margin: 0 auto; /* Center the table */
+    padding: 10px;
+}
+
+table {
+    width: 100%; /* Ensure table takes full width */
+    margin-top: 30px;
+    border-collapse: collapse; /* Remove gaps between table cells */
+    background-color: #f9f9f9; /* Light background for the table */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Light border for table rows */
+}
+
+th {
+    background-color: #f1f1f1; /* Light background for headers */
+    font-weight: 600; /* Bold headers */
+}
+
+td {
+    background-color: #ffffff; /* White background for data */
+}
+
+table tr:hover {
+    background-color: #f8f9fc; /* Hover effect on rows */
+}
+
+table a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+table a:hover {
+    text-decoration: underline;
 }
 </style>
 
 {% endblock %}
-{% block style %}
 
+{% block style %}
 {% endblock %}
