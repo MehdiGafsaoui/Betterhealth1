@@ -1,0 +1,131 @@
+{% extends 'test/test.html.twig' %}
+
+{% block body %}
+    <div class="table-container">
+        <h1 class="text-center mb-4">Blood Center</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Telephone</th>
+                    <th>Email</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for centre_de_don in centre_de_dons %}
+                <tr>
+                    <td>{{ centre_de_don.id }}</td>
+                    <td>{{ centre_de_don.name }}</td>
+                    <td>{{ centre_de_don.address }}</td>
+                    <td>{{ centre_de_don.telephone }}</td>
+                    <td>{{ centre_de_don.email }}</td>
+                    <td>{{ centre_de_don.createdAt ? centre_de_don.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_centre_de_don_show', {'id': centre_de_don.id}) }}" class="btn btn-info btn-sm">Show</a>
+                        {% if 'ROLE_ADMIN' in app.user.roles %}
+                        <a href="{{ path('app_centre_de_don_edit', {'id': centre_de_don.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                        {% endif %}
+
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-center mt-4">
+        {% if 'ROLE_ADMIN' in app.user.roles %}
+            <a href="{{ path('app_centre_de_don_new') }}" class="btn btn-primary">Create New</a>
+            {% endif %}
+
+        </div>
+    </div>
+    <style>
+.table-container {
+    max-width: 900px;
+    margin: 30px auto; /* Add vertical margin to space out from the top */
+    padding: 30px;
+    background-color: #f8f9fa; /* Light background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff; /* White background for the table */
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Light border for rows */
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #f1f1f1; /* Slightly shaded rows */
+}
+
+thead {
+    background-color: #007bff; /* Blue header */
+    color: white; /* White text for header */
+}
+
+thead th {
+    font-weight: bold;
+}
+
+/* Button styling */
+.btn-info {
+    background-color: #17a2b8; /* Light blue */
+    color: white;
+    border: none;
+}
+
+.btn-warning {
+    background-color: #ffc107; /* Yellow */
+    color: white;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #007bff; /* Primary blue */
+    color: white;
+    border: none;
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.875rem;
+}
+
+/* Text alignment */
+.text-center {
+    text-align: center;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+/* No records message */
+td[colspan="7"] {
+    font-style: italic;
+    color: #888; /* Grey color for "No records found" message */
+}
+</style>
+{% endblock %}
+
+
+{% block style %}
+
+{% endblock %}

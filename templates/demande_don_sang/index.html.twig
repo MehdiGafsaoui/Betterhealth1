@@ -54,7 +54,7 @@
                             </li>
                             <li class="nav-item">
                             {% if app.user %}
-                                <a class="nav-link" href="{{ path('app_dondesang2') }}">Blood donation</a>
+                                <a class="nav-link" href="{{ path('notifications') }}">Blood donation</a>
                                 
                             </li>
                              <li class="nav-item">
@@ -213,43 +213,39 @@
     </script>
 
     <style>
-        .btn-personal {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 4px 8px; /* Very small padding */
-        background-color: rgb(157, 209, 205); /* Your custom color */
-        color: white;
-        text-decoration: none;
-        border-radius: 3px; /* Smaller border radius */
-        margin-bottom: 10px; /* Reduced margin */
-        font-size: 12px; /* Smaller font size */
-        font-weight: 500; /* Normal font weight */
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Smaller shadow */
-        border: none; /* Remove default border */
-        cursor: pointer; /* Add pointer cursor for better UX */
-        height: auto; /* Ensure height is not forced */
-        line-height: 1; /* Tight line height */
-    }
+    .btn-personal {
+            display: inline-flex;
+            
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            background-color:rgb(157, 209, 205); /* Green color */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .btn-personal:hover {
-        background-color: rgb(137, 189, 185); /* Slightly darker shade on hover */
-        transform: translateY(-1px); /* Smaller lift on hover */
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
-    }
+        .btn-personal:hover {
+            background-color:rgb(118, 183, 179); /* Darker green on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
 
-    .btn-personal:active {
-        transform: translateY(0); /* Reset transform on click */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Reset shadow on click */
-    }
+        .btn-personal:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .btn-personal i {
-        margin-right: 6px; /* Smaller margin for the icon */
-        font-size: 12px; /* Smaller icon size */
-    }
+        .btn-personal i {
+            margin-right: 8px;
+            font-size: 10px;
+        }
 
-       
         /* Dropdown form */
         .filter-form {
             margin-bottom: 20px;

@@ -15,6 +15,11 @@ class StatistiqueController extends AbstractController
     {
         return $this->render('demande_don_sang/index.html.twig');
     }
+    #[Route('/statistiquesadmin', name: 'app_statistiques')]
+    public function index2(): \Symfony\Component\HttpFoundation\Response
+    {
+        return $this->render('statistiques/index.html.twig');
+    }
 
     #[Route('/api/statistiques/dons-par-mois', name: 'dons_par_mois')]
     public function donsParMois(DemandeDonSangRepository $repository): JsonResponse

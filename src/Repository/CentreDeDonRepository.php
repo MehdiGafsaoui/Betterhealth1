@@ -40,4 +40,14 @@ class CentreDeDonRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    // In CentreDeDonRepository.php
+    public function findAllCentres()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.name', 'ASC')  // Adjust 'name' to the field you want to use for sorting
+            ->getQuery()
+            ->getResult();
+    }
+
 }

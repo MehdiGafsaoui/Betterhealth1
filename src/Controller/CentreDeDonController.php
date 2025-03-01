@@ -17,6 +17,12 @@ final class CentreDeDonController extends AbstractController
     #[Route(name: 'app_centre_de_don_index', methods: ['GET'])]
     public function index(CentreDeDonRepository $centreDeDonRepository): Response
     {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->render('admin/centre_de_don/index.html.twig', [
+                'centre_de_dons' => $centreDeDonRepository->findAll(),
+            ]);
+        }
+
         return $this->render('centre_de_don/index.html.twig', [
             'centre_de_dons' => $centreDeDonRepository->findAll(),
         ]);
@@ -43,6 +49,13 @@ final class CentreDeDonController extends AbstractController
             return $this->redirectToRoute('app_centre_de_don_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->render('admin/centre_de_don/new.html.twig', [
+                'centre_de_don' => $centreDeDon,
+                'form' => $form,
+            ]);
+        }
+
         return $this->render('centre_de_don/new.html.twig', [
             'centre_de_don' => $centreDeDon,
             'form' => $form,
@@ -52,6 +65,12 @@ final class CentreDeDonController extends AbstractController
     #[Route('/{id}', name: 'app_centre_de_don_show', methods: ['GET'])]
     public function show(CentreDeDon $centreDeDon): Response
     {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->render('admin/centre_de_don/show.html.twig', [
+                'centre_de_don' => $centreDeDon,
+            ]);
+        }
+
         return $this->render('centre_de_don/show.html.twig', [
             'centre_de_don' => $centreDeDon,
         ]);
@@ -67,6 +86,13 @@ final class CentreDeDonController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_centre_de_don_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->render('admin/centre_de_don/edit.html.twig', [
+                'centre_de_don' => $centreDeDon,
+                'form' => $form,
+            ]);
         }
 
         return $this->render('centre_de_don/edit.html.twig', [
