@@ -75,4 +75,12 @@ public function index(Request $request, UserRepository $userRepository): Respons
 
         return $this->redirectToRoute('admin_dashboard');
     }
+    #[Route('/bloodAdmin', name: 'app_dongadmin')]
+    public function test2(): Response
+    {
+        return $this->render('test/blooddonation.html.twig', [
+            'page_title' => 'Blood Donation',
+        ]);
+    }
+   
 }

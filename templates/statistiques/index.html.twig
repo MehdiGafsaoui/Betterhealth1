@@ -1,15 +1,26 @@
-{% extends 'client/index.html.twig' %}
+{% extends 'test/test.html.twig' %}
 
-{% block title %} Statistiques des dons {% endblock %}
+{% block title %} Blood Donation Statistics {% endblock %}
 
 {% block body %}
-    <h1>Statistiques des dons</h1>
+    <h1>s</h1>
 
     <div class="charts-container">
+    <div class="chart-block">
+        <h2>Donations Per Month</h2>
         <canvas id="donsParMois"></canvas>
+    </div>
+    <div class="chart-block small-chart">
+        <h2>Donations Per Blood Group</h2>
         <canvas id="donsParGroupe"></canvas>
+    </div>
+    <div class="chart-block">
+        <h2>Donations Per Center</h2>
         <canvas id="donsParCentre"></canvas>
     </div>
+</div>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -20,16 +31,15 @@
 
         async function renderCharts() {
             // Données des dons par mois
-            // Données des dons par mois
             const donsParMois = await fetchData('/api/statistiques/dons-par-mois');
             new Chart(document.getElementById('donsParMois'), {
-                type: 'bar', // Change to 'bar' for a bar chart
+                type: 'bar',
                 data: {
                     labels: donsParMois.map(d => d.mois),
                     datasets: [{
                         label: 'Dons par mois',
                         data: donsParMois.map(d => d.total),
-                        backgroundColor: 'blue' // You can change the color here
+                        backgroundColor: 'blue'
                     }]
                 },
                 options: {

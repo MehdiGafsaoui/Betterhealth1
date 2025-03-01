@@ -14,39 +14,44 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
-
 #[Route('/demande/don/sang')]
 final class DemandeDonSangController extends AbstractController
 {
     #[Route(name: 'app_demande_don_sang_index', methods: ['GET'])]
-    public function index(Request $request, DemandeDonSangRepository $demandeDonSangRepository ,CentreDeDonRepository $centreDeDonRepository,): Response
-    { $demandeDonSangs = $demandeDonSangRepository->findAll();
+    public function index(Request $request, DemandeDonSangRepository $demandeDonSangRepository, CentreDeDonRepository $centreDeDonRepository): Response
+    {
+        $demandeDonSangs = $demandeDonSangRepository->findAll();
 
         // Get the status from the request query parameters
         $status = $request->query->get('status');
         $user = $this->getUser();
         $showPersonalRequests = $request->query->get('personal') === 'true';
 
-        // Fetch demandeDonSangs based on the selected filter
         if ($showPersonalRequests && $user) {
-            // Filter by user (personal requests)
             $demandeDonSangs = $demandeDonSangRepository->findByUser($user->getId());
         } elseif ($status) {
-            // Filter by status
             $demandeDonSangs = $demandeDonSangRepository->findByStatus($status);
         } else {
-            // No filter: show all
             $demandeDonSangs = $demandeDonSangRepository->findAll();
         }
-    
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->render('admin/demande_don_sang/index.html.twig', [
+                'demande_don_sangs' => $demandeDonSangs,
+                'showPersonalRequests' => $showPersonalRequests,
+                'selectedStatus' => $status,
+            ]);
+        }
+
         return $this->render('demande_don_sang/index.html.twig', [
             'demande_don_sangs' => $demandeDonSangs,
             'showPersonalRequests' => $showPersonalRequests,
             'selectedStatus' => $status,
         ]);
     }
+
     #[Route('/new', name: 'app_demande_don_sang_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,MailerInterface $mailer ): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         $demandeDonSang = new DemandeDonSang();
         $demandeDonSang->setStatus('pending');
@@ -58,9 +63,15 @@ final class DemandeDonSangController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($demandeDonSang);
             $entityManager->flush();
-            
 
             return $this->redirectToRoute('app_demande_don_sang_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->render('admin/demande_don_sang/new.html.twig', [
+                'demande_don_sang' => $demandeDonSang,
+                'form' => $form,
+            ]);
         }
 
         return $this->render('demande_don_sang/new.html.twig', [
@@ -72,6 +83,12 @@ final class DemandeDonSangController extends AbstractController
     #[Route('/{id}', name: 'app_demande_don_sang_show', methods: ['GET'])]
     public function show(DemandeDonSang $demandeDonSang): Response
     {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->render('admin/demande_don_sang/show.html.twig', [
+                'demande_don_sang' => $demandeDonSang,
+            ]);
+        }
+
         return $this->render('demande_don_sang/show.html.twig', [
             'demande_don_sang' => $demandeDonSang,
         ]);
@@ -87,6 +104,13 @@ final class DemandeDonSangController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_demande_don_sang_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->render('admin/demande_don_sang/edit.html.twig', [
+                'demande_don_sang' => $demandeDonSang,
+                'form' => $form,
+            ]);
         }
 
         return $this->render('demande_don_sang/edit.html.twig', [
@@ -105,7 +129,4 @@ final class DemandeDonSangController extends AbstractController
 
         return $this->redirectToRoute('app_demande_don_sang_index', [], Response::HTTP_SEE_OTHER);
     }
-
-
-    
 }

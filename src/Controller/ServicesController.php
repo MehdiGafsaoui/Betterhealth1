@@ -22,13 +22,7 @@ class ServicesController extends AbstractController
             'page_title' => 'Blood Donation',
         ]);
     }
-    #[Route('/dondesang', name: 'app_dondesang2')]
-    public function dondesang1(): Response
-    {
-        return $this->render('client/dondesang.html.twig', [
-            'page_title' => 'Blood Donation',
-        ]);
-    }
+    
     #[Route('/makeAppointments', name: 'app_appointments')]
     public function apointments(): Response
     {
@@ -50,6 +44,20 @@ class ServicesController extends AbstractController
     public function cards(): Response
     {
         return $this->render('demande_don_sang/view.html.twig', [
+            'page_title' => 'Blood Donation',
+        ]);
+    }
+    #[Route('/test', name: 'app_card')]
+    public function test(): Response
+    {
+        return $this->render('test/test.html.twig', [
+            'page_title' => 'Blood Donation',
+        ]);
+    }
+    #[Route('/bloodAdmin', name: 'app_dongadmin')]
+    public function test2(): Response
+    {
+        return $this->render('test/blooddonation.html.twig', [
             'page_title' => 'Blood Donation',
         ]);
     }

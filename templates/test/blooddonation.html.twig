@@ -1,0 +1,61 @@
+{% extends 'test/test.html.twig' %}
+
+{% block title %}Welcome to BetterHealth{% endblock %}
+
+{% block body %}
+    <div class="container text-center mt-5 pt-4">
+        <h1 class="mb-4 mt-5">Welcome to BetterHealth</h1>
+        <p class="lead">Your donation can save lives! Explore blood donation centers, check your requests, or make a new donation.</p>
+
+        
+        <div class="row mt-4">
+            <!-- Blood Donation Centers -->
+            <div class="col-md-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Find Blood Donation Centers</h5>
+                        <p class="card-text">Locate nearby blood donation centers.</p>
+                        <a href="{{ path('app_centre_de_don_index') }}" class="btn btn-danger">View Centers</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Blood Donation Requests -->
+            <div class="col-md-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">My Blood Donation Requests</h5>
+                        <p class="card-text">Track your past and pending blood donation requests.</p>
+                        <a href="{{ path('app_demande_don_sang_index') }}" class="btn btn-warning">View Requests</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donate Blood -->
+            <div class="col-md-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Donate Blood</h5>
+                        <p class="card-text">Be a hero! Schedule your blood donation now.</p>
+                        {% if app.user %}
+                        <a href="{{ path('app_demande_don_sang_new') }}" class="btn btn-danger">Donate Now</a>
+                        {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-danger">Donate Now</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Map (New Card) -->
+            <div class="col-md-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">View Map</h5>
+                        <p class="card-text">See the locations of all blood donation centers on the map.</p>
+                        <a href="{{ path('app_map') }}" class="btn btn-info">View Map</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
