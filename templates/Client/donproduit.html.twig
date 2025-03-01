@@ -38,6 +38,31 @@
                 </div>
             </div>
 
+            <!-- Notification Dropdown -->
+            <div class="mt-5">
+                <h2>Notifications</h2>
+                <div class="dropdown">
+                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        Notifications
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for notification in notifications %}
+                            <li>
+                                <div class="dropdown-item">
+                                    {{ notification.message }} - {{ notification.createdAt|date('d/m/Y') }}
+                                    <form method="post" action="{{ path('mark_notification_read', {'id': notification.id}) }}" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-link">Mark as Read</button>
+                                    </form>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li>
+                                <div class="dropdown-item">Aucune nouvelle notification.</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

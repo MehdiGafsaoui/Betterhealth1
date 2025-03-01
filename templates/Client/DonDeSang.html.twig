@@ -4,8 +4,31 @@
 
 {% block body %}
     <div class="container text-center mt-5 pt-4">
-        <h1 class="mb-4 mt-5">Welcome to BetterHealth</h1>  <!-- Added mt-5 class for margin-top -->
+        <h1 class="mb-4 mt-5">Welcome to BetterHealth</h1>
         <p class="lead">Your donation can save lives! Explore blood donation centers, check your requests, or make a new donation.</p>
+
+        <!-- Notification Dropdown (Aligned to the right) -->
+        <div class="dropdown mt-4 position-absolute" style="top: 10px; left: 40px; z-index: 1050;">
+            <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Notifications
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% for notification in notifications %}
+                    <li>
+                        <div class="dropdown-item">
+                            {{ notification.message }} - {{ notification.createdAt|date('d/m/Y') }}
+                            <form method="post" action="{{ path('mark_notification_read', {'id': notification.id}) }}" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-link">Mark as Read</button>
+                            </form>
+                        </div>
+                    </li>
+                {% else %}
+                    <li>
+                        <div class="dropdown-item">Aucune nouvelle notification.</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
 
         <div class="row mt-4">
             <!-- Blood Donation Centers -->
