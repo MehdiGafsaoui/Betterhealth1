@@ -4,6 +4,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\CentreDeDonRepository;
 
 class ServicesController extends AbstractController
 {
@@ -36,10 +37,13 @@ class ServicesController extends AbstractController
         ]);
     }
     #[Route('/map', name: 'app_map')]
-    public function maps(): Response
+    public function maps(CentreDeDonRepository $centreDeDonRepository): Response
     {
+        $centres = $centreDeDonRepository->findAll();
+
         return $this->render('centre_de_don/map.html.twig', [
             'page_title' => 'Blood Donation',
+            'centres' => $centres,  
         ]);
     }
     #[Route('/cards', name: 'app_card')]

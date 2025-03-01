@@ -48,6 +48,23 @@ class CentreDeDon
     #[ORM\Column(nullable: true)]
     #[Assert\NotNull(message: "La date de création est obligatoire.")]
     private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(type: "float", nullable: true)]
+    #[Assert\NotNull(message: "La latitude est obligatoire.")]
+    #[Assert\Range(
+        min: -90,
+        max: 90,
+        notInRangeMessage: "La latitude doit être entre {{ min }} et {{ max }}."
+    )]
+    private ?float $latitude = null;
+
+    #[ORM\Column(type: "float", nullable: true)]
+    #[Assert\NotNull(message: "La longitude est obligatoire.")]
+    #[Assert\Range(
+        min: -180,
+        max: 180,
+        notInRangeMessage: "La longitude doit être entre {{ min }} et {{ max }}."
+    )]
+    private ?float $longitude = null;
 
     public function getId(): ?int
     {
@@ -112,6 +129,27 @@ class CentreDeDon
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+        return $this;
+    }
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(?float $latitude): static
+    {
+        $this->latitude = $latitude;
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?float $longitude): static
+    {
+        $this->longitude = $longitude;
         return $this;
     }
 }

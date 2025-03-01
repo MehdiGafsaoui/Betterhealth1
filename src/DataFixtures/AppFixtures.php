@@ -25,15 +25,15 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 10; $i++) {
             $demande = new DemandeDonSang();
             
-            $demande->setGroupesanguain($bloodTypes[$i % count($bloodTypes)]); // Cycle through blood types
-            $demande->setQuantite(round(0.2 + ($i * 0.2), 1)); // Quantities between 0.2 and 2
-            $demande->setStatus($statuses[$i % count($statuses)]); // Cycle through statuses
+            $demande->setGroupesanguain($bloodTypes[$i % count($bloodTypes)]); 
+            $demande->setQuantite(round(0.2 + ($i * 0.2), 1)); 
+            $demande->setStatus($statuses[$i % count($statuses)]);
 
-            // CreatedAt: Set manually to different dates
-            $demande->setCreatedAt(new \DateTime(sprintf('-%d days', $i * 10))); // Every 10 days in the past
+            
+            $demande->setCreatedAt(new \DateTime(sprintf('-%d days', $i * 10))); 
 
-            $demande->setUser($users[$i % count($users)]); // Assign users in order
-            $demande->setCentreDeDon($centres[$i % count($centres)]); // Assign centers in order
+            $demande->setUser($users[$i % count($users)]); 
+            $demande->setCentreDeDon($centres[$i % count($centres)]); 
 
             $manager->persist($demande);
         }
