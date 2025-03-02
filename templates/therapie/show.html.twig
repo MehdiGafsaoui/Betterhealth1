@@ -1,60 +1,150 @@
 {% extends 'Client/index.html.twig' %}
 
 {% block body %}
-<div class="container mt-5 pt-5"> {# Increased margin and padding to move content further down #}
-    <div class="d-flex justify-content-center">
-        <div class="w-75">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h2 class="card-title mb-0 text-center">Détails de la Thérapie</h2>
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <th style="width: 150px;">Id</th>
-                                <td>{{ therapie.id }}</td>
-                            </tr>
-                            <tr>
-                                <th>Image</th>
-                                <td>
-                                    {% if therapie.image %}
-                                        <img src="{{ asset('img/therapie.jpg') }}" alt="{{ therapie.nom }}" class="img-fluid d-block mx-auto" style="max-height: 200px;">
-                                    {% else %}
-                                        <em>Aucune image</em>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Nom</th>
-                                <td>{{ therapie.nom }}</td>
-                            </tr>
-                            <tr>
-                                <th>Description</th>
-                                <td>{{ therapie.description }}</td>
-                            </tr>
-                            <tr>
-                                <th>Objectif</th>
-                                <td>{{ therapie.objectif }}</td>
-                            </tr>
-                            <tr>
-                                <th>Durée</th>
-                                <td>{{ therapie.duree }}</td>
-                            </tr>
-                            <tr>
-                                <th>Type</th>
-                                <td>{{ therapie.type }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer text-center">
-                    <a href="{{ path('app_therapie_index') }}" class="btn btn-secondary">Retour à la liste</a>
-                    <a href="{{ path('app_therapie_edit', {'id': therapie.id}) }}" class="btn btn-warning">Modifier</a>
-                    {{ include('therapie/_delete_form.html.twig') }}
-                </div>
-            </div>
+<style>
+    /* Custom styling for the language select */
+    .custom-language-select {
+        border: 2px solid #007bff;
+        border-radius: 5px;
+        padding: 5px 10px;
+        background: linear-gradient(45deg, #e3f2fd, #ffffff);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        font-weight: 500;
+        color: #007bff;
+    }
+    .custom-language-select:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(0,123,255,0.5);
+        border-color: #0056b3;
+    }
+</style>
+<div class="d-flex justify-content-center mt-5 pt-5">
+    <div class="w-75">
+        {# Language select dropdown placed on top right #}
+        <div class="d-flex justify-content-end mb-3">
+            <select id="language-select" class="form-select w-auto custom-language-select">
+                <option value="fr" selected>Français</option>
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+                <option value="ar">العربية</option>
+                <option value="zh">中文</option>
+            </select>
         </div>
+        <div class="d-flex flex-wrap gap-4 justify-content-center" id="therapie-cards">
+            {% for therapie in therapies %}
+                <div class="card shadow-sm" style="width: 18rem;">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0 text-center translatable-nom">{{ therapie.nom }}</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        {% if therapie.image %}
+                            <img src="{{ asset('uploads/images/'~therapie.image) }}" alt="{{ therapie.nom }}" class="card-img-top mb-3" style="max-height: 150px; object-fit: cover;">
+                        {% else %}
+                            <p class="text-muted">No Image Available</p>
+                        {% endif %}
+                        <p class="card-text text-muted translatable-description">
+                            {{ therapie.description|length > 100 ? therapie.description|slice(0, 100) ~ '...' : therapie.description }}
+                        </p>
+                        <p>
+                            <strong>Objectif:</strong>
+                            <span class="translatable-objectif">{{ therapie.objectif }}</span>
+                        </p>
+                        <p>
+                            <strong>Durée:</strong> {{ therapie.duree }}
+                        </p>
+                        <p>
+                            <strong>Type:</strong>
+                            <span class="translatable-type">{{ therapie.type }}</span>
+                        </p>
+                        <div>
+                            <img src="{{ asset('/uploads/qrcode/therapie-' ~ therapie.id ~ '.png') }}" alt="QR Code for {{ therapie.nom }}" style="max-height: 100px;">
+                        </div>
+                        <div class="mt-3">
+                            <a href="{{ path('app_therapie_show', {'id': therapie.id}) }}" class="btn btn-info btn-sm">Show</a>
+                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                                <a href="{{ path('app_therapie_edit', {'id': therapie.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="text-center">
+                    <p class="text-muted">No therapies found.</p>
+                </div>
+            {% endfor %}
+        </div>
+        {% if 'ROLE_ADMIN' in app.user.roles %}
+            <div class="text-end mt-4">
+                <a href="{{ path('app_therapie_new') }}" class="btn btn-success">Create New Therapie</a>
+            </div>
+        {% endif %}
     </div>
 </div>
+
+<script>
+// Listen for changes on the language select dropdown.
+document.getElementById('language-select').addEventListener('change', function() {
+    const targetLang = this.value;
+    const cardContainer = document.getElementById('therapie-cards');
+    const cards = cardContainer.querySelectorAll('.card');
+
+    let textsToTranslate = [];
+    let cardMapping = [];
+
+    // Loop through each card to collect texts and keep a mapping for updating.
+    cards.forEach(card => {
+        const nomElem = card.querySelector('.translatable-nom');
+        const descElem = card.querySelector('.translatable-description');
+        const objectifElem = card.querySelector('.translatable-objectif');
+        const typeElem = card.querySelector('.translatable-type');
+        
+        if (nomElem && descElem && objectifElem && typeElem) {
+            textsToTranslate.push(nomElem.innerText.trim());
+            textsToTranslate.push(descElem.innerText.trim());
+            textsToTranslate.push(objectifElem.innerText.trim());
+            textsToTranslate.push(typeElem.innerText.trim());
+            cardMapping.push({
+                nom: nomElem,
+                description: descElem,
+                objectif: objectifElem,
+                type: typeElem
+            });
+        }
+    });
+
+    if (textsToTranslate.length > 0) {
+        fetch('http://127.0.0.1:5000/translate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                texts: textsToTranslate,
+                target_language: targetLang
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.translated_texts) {
+                const translatedTexts = data.translated_texts;
+                // For each card update the corresponding elements with the translated text.
+                cardMapping.forEach((mapping, index) => {
+                    const baseIndex = index * 4;
+                    mapping.nom.innerText = translatedTexts[baseIndex];
+                    mapping.description.innerText = translatedTexts[baseIndex + 1];
+                    mapping.objectif.innerText = translatedTexts[baseIndex + 2];
+                    mapping.type.innerText = translatedTexts[baseIndex + 3];
+                });
+            } else if (data.error) {
+                alert('Translation error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error during translation:', error);
+            alert('An error occurred during translation.');
+        });
+    }
+});
+</script>
 {% endblock %}

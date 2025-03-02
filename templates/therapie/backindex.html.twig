@@ -48,6 +48,8 @@
                             <td>
                                 <a href="{{ path('app_therapie_show', {'id': therapie.id}) }}" class="btn btn-info btn-sm">Show</a>
                                 <a href="{{ path('app_therapie_edit', {'id': therapie.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ path('app_therapie_delete', {'id': therapie.id}) }}" class="btn btn-info btn-sm">Delete</a>
+                                
                             </td>
                         </tr>
                     {% else %}
