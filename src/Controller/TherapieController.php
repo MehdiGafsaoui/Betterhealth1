@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-
+use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/therapie')]
 final class TherapieController extends AbstractController
 {
@@ -52,13 +52,30 @@ final class TherapieController extends AbstractController
     }
 
     #[Route('/new', name: 'app_therapie_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $therapie = new Therapie();
         $form = $this->createForm(TherapieType::class, $therapie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('imageFile')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (\Exception $e) {
+                    // Handle file upload exception if needed
+                    $this->addFlash('error', 'Image upload failed.');
+                }
+                $therapie->setImage($newFilename);
+
+            }
             $entityManager->persist($therapie);
             $entityManager->flush();
 
@@ -80,12 +97,29 @@ final class TherapieController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_therapie_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Therapie $therapie, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Therapie $therapie, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(TherapieType::class, $therapie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('imageFile')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (\Exception $e) {
+                    // Handle file upload exception if needed
+                    $this->addFlash('error', 'Image upload failed.');
+                }
+                $therapie->setImage($newFilename);
+
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_therapie_index', [], Response::HTTP_SEE_OTHER);

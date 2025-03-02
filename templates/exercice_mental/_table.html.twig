@@ -1,0 +1,21 @@
+{# templates/exercice_mental/_table.html.twig #}
+<tbody id="exercice-mental-table">
+  {% for exercice_mental in exercice_mentals %}
+    <tr>
+      <td>{{ exercice_mental.id }}</td>
+      <td>{{ exercice_mental.videoUrl }}</td>
+      <td class="translatable-titre">{{ exercice_mental.titre }}</td>
+      <td class="translatable-description">{{ exercice_mental.description }}</td>
+      <td>{{ exercice_mental.dureeMinutes }}</td>
+      <td class="translatable-objectif">{{ exercice_mental.objectif }}</td>
+      <td>
+        <a href="{{ path('app_exercice_mental_show', {'id': exercice_mental.id}) }}" class="btn btn-info btn-sm">Show</a>
+        <a href="{{ path('app_exercice_mental_edit', {'id': exercice_mental.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+      </td>
+    </tr>
+  {% else %}
+    <tr>
+      <td colspan="7" class="text-center">No records found</td>
+    </tr>
+  {% endfor %}
+</tbody>

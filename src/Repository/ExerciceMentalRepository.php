@@ -15,6 +15,27 @@ class ExerciceMentalRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ExerciceMental::class);
     }
+    public function findBySearchAndSort(string $search, string $sortField, string $sortDirection): array
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        if (!empty($search)) {
+            $qb->andWhere('e.titre LIKE :search OR e.description LIKE :search OR e.objectif LIKE :search')
+            ->setParameter('search', '%'.$search.'%');
+        }
+
+        // Ensure the sort field is one of the allowed values
+        $allowedSortFields = ['titre', 'description', 'objectif'];
+        if (in_array($sortField, $allowedSortFields)) {
+            $qb->orderBy('e.' . $sortField, $sortDirection);
+        } else {
+            // Fallback sorting (for example, by ID)
+            $qb->orderBy('e.id', 'ASC');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     //    /**
     //     * @return ExerciceMental[] Returns an array of ExerciceMental objects

@@ -10,18 +10,37 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 #[Route('/exercice/mental')]
 final class ExerciceMentalController extends AbstractController
 {
     #[Route(name: 'app_exercice_mental_index', methods: ['GET'])]
-    public function index(ExerciceMentalRepository $exerciceMentalRepository): Response
+    public function index(ExerciceMentalRepository $exerciceMentalRepository, Request $request): Response
     {
+        $search = $request->query->get('search', '');
+        $sortField = $request->query->get('sortField', '');
+        $sortDirection = strtoupper($request->query->get('sortDirection', 'ASC'));
+
+        // Validate sortDirection
+        if (!in_array($sortDirection, ['ASC', 'DESC'])) {
+            $sortDirection = 'ASC';
+        }
+
+        $exerciceMentals = $exerciceMentalRepository->findBySearchAndSort($search, $sortField, $sortDirection);
+
+        // If the request is AJAX, render only the table rows
+        if ($request->isXmlHttpRequest()) {
+            $tableContent = $this->renderView('exercice_mental/_table.html.twig', [
+                'exercice_mentals' => $exerciceMentals,
+            ]);
+            return new JsonResponse(['content' => $tableContent]);
+        }
+
+        // Otherwise render the full page
         return $this->render('exercice_mental/index.html.twig', [
-            'exercice_mentals' => $exerciceMentalRepository->findAll(),
+            'exercice_mentals' => $exerciceMentals,
         ]);
     }
-
     #[Route('/new', name: 'app_exercice_mental_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -41,7 +60,8 @@ final class ExerciceMentalController extends AbstractController
             'form' => $form,
         ]);
     }
-
+    
+    
     #[Route('/{id}', name: 'app_exercice_mental_show', methods: ['GET'])]
     public function show(ExerciceMental $exerciceMental): Response
     {
