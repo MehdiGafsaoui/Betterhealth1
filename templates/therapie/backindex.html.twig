@@ -1,4 +1,4 @@
-{% extends 'Client/index.html.twig' %}
+{% extends 'test/test.html.twig' %}
 
 {% block body %}
 <div class="d-flex justify-content-center mt-5 pt-5">
@@ -35,7 +35,7 @@
                             <td>{{ therapie.id }}</td>
                             <td>
                                 {% if therapie.image %}
-                                    <img src="{{ asset('img/therapie.jpg') }}" alt="{{ therapie.nom }}" style="max-height: 50px;">
+                                    <img src="{{ asset('uploads/images/'~therapie.image) }}" alt="{{ therapie.nom }}" style="max-height: 50px;">
                                 {% else %}
                                     N/A
                                 {% endif %}

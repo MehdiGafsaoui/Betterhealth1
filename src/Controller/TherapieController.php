@@ -43,10 +43,10 @@ final class TherapieController extends AbstractController
         $content.="Type: ".$therapie->getType()."\n";
         return $content;
     }
-    #[Route('/front',name: 'app_therapie_index_front', methods: ['GET'])]
-    public function indexFront(TherapieRepository $therapieRepository): Response
+    #[Route('/back',name: 'app_therapie_index_back', methods: ['GET'])]
+    public function indexBack(TherapieRepository $therapieRepository): Response
     {
-        return $this->render('therapie/frontindex.html.twig', [
+        return $this->render('therapie/backindex.html.twig', [
             'therapies' => $therapieRepository->findAll(),
         ]);
     }
@@ -79,7 +79,7 @@ final class TherapieController extends AbstractController
             $entityManager->persist($therapie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_therapie_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_therapie_index_back', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('therapie/new.html.twig', [
@@ -122,7 +122,7 @@ final class TherapieController extends AbstractController
             }
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_therapie_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_therapie_index_back', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('therapie/edit.html.twig', [
