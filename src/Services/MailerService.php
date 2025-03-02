@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Entity\Evenements;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -16,19 +17,35 @@ class MailerService
     }
 
     // Méthode pour envoyer un email de confirmation de participation
-    public function sendEmail($code, $email): void
-    {
-        // Création de l'email
-        $email = (new Email())
-            ->from('saropez.pro@gmail.com')  // L'adresse email d'envoi
-            ->to($email)  // L'adresse email du destinataire
-            ->subject('Confirmation de participation à l\'événement')  // Sujet de l'email
-            ->text('Vous avez bien participé à l\'événement. Votre code de confirmation est : ' . $code) // Corps de l'email en texte brut
-            ->html('<p>Vous avez bien participé à l\'événement. <strong>Votre code de confirmation est : ' . $code . '</strong></p>');  // Corps de l'email en HTML
-    
-        // Envoi de l'email
-        $this->mailer->send($email);
-    }
+    public function sendEmail(Evenements $evenement, string $email): void
+{
+    $emailMessage = (new Email())
+        ->from('saropez.pro@gmail.com')
+        ->to($email)
+        ->subject('Confirmation de participation à l\'événement : ' . $evenement->getNom())
+        ->text(
+            "Détails de l'événement :\n\n" .
+            "Nom : " . $evenement->getNom() . "\n" .
+            "Date de début : " . $evenement->getDatedebut()->format('d/m/Y') . "\n" .
+            "Date de fin : " . $evenement->getDatefin()->format('d/m/Y') . "\n" .
+            "Lieu : " . $evenement->getLieu() . "\n\n" .
+            "Description : " . $evenement->getDescription()
+        )
+        ->html("
+            <p><strong>Détails de l'événement :</strong></p>
+            <ul>
+                <li><strong>Nom :</strong> {$evenement->getNom()}</li>
+                <li><strong>Date de début :</strong> " . $evenement->getDatedebut()->format('d/m/Y') . "</li>
+                <li><strong>Date de fin :</strong> " . $evenement->getDatefin()->format('d/m/Y') . "</li>
+                <li><strong>Lieu :</strong> {$evenement->getLieu()}</li>
+            </ul>
+            <p><strong>Description :</strong></p>
+            <p>{$evenement->getDescription()}</p>
+        ");
+
+    $this->mailer->send($emailMessage);
+}
+
     
     
 }

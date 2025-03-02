@@ -96,31 +96,24 @@ final class EventsClientController extends AbstractController
     #[Route('/reserver/{id}', name: 'app_reserver', methods: ['POST'])]
     public function reserver(Request $request, Evenements $evenement, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
-        // Vérification que l'utilisateur est connecté
         $user = $this->getUser();
         if (!$user) {
             $this->addFlash('error', 'Vous devez être connecté pour réserver des places.');
             return $this->redirectToRoute('app_events_client');
         }
     
-        // Récupérer le nombre de places depuis la requête
         $nombrePlaces = (int)$request->request->get('nombre_places', 1);
-    
-        // Validation du nombre de places
         if ($nombrePlaces <= 0) {
             $this->addFlash('error', 'Le nombre de places doit être supérieur à zéro.');
             return $this->redirectToRoute('app_confirmation', ['id' => $evenement->getId()]);
         }
     
-        // Vérifier si l'utilisateur a déjà réservé des places pour cet événement
         $participation = $entityManager->getRepository(Participation::class)
             ->findOneBy(['participant' => $user, 'evenement' => $evenement]);
     
         if ($participation) {
-            // Mettre à jour le nombre de places réservées
             $participation->setNombrepersonne($nombrePlaces);
         } else {
-            // Création de la participation
             $participation = new Participation();
             $participation->setParticipant($user);
             $participation->setEvenement($evenement);
@@ -128,39 +121,22 @@ final class EventsClientController extends AbstractController
             $participation->setDateparticipation(new \DateTime());
         }
     
-        // Enregistrement de la participation
         $entityManager->persist($participation);
         $entityManager->flush();
     
-        // Récupérer l'email de l'utilisateur
         $userEmail = $user->getEmail();
     
-        // Générer un code de confirmation de réservation
-        $code = $this->generateRandomCode();
+        // Envoi de l'email avec les détails de l'événement
+        $mailerService = new MailerService(new Mailer(Transport::fromDsn('gmail://firas.guesmi93806411@gmail.com:kyld%20wmzb%20finx%20dmns@default')));
+        $mailerService->sendEmail($evenement, $userEmail);
     
-        // Enregistrer le code de réservation dans la session
-        $session->set('reservationCode', $code);
-    
-        // Envoi de l'email de confirmation de réservation
-        $mailerDsn = 'gmail://firas.guesmi93806411@gmail.com:kyld%20wmzb%20finx%20dmns@default'; 
-        $transport = Transport::fromDsn($mailerDsn);
-        $mailer = new Mailer($transport);
-        $mailerService = new MailerService($mailer);
-    
-        // Envoi de l'email
-        $mailerService->sendEmail($code, $userEmail);
-    
-        // Message de confirmation pour l'utilisateur
-        $this->addFlash('success', 'Votre réservation à l\'événement ' . $evenement->getNom() . ' a été enregistrée avec succès. Un email vous a été envoyé.');
+        $this->addFlash('success', 'Votre réservation à l\'événement "' . $evenement->getNom() . '" a été enregistrée avec succès. Un email vous a été envoyé.');
     
         return $this->redirectToRoute('app_confirmation', ['id' => $evenement->getId()]);
     }
     
-    // Fonction pour générer un code aléatoire
-    private function generateRandomCode(): string
-    {
-        return strtoupper(bin2hex(random_bytes(4))); // Code aléatoire de 8 caractères
-    }
+    
+   
     
     #[Route('/events/details/{id}', name: 'app_evenements_details', methods: ['GET'])]
     public function details(Evenements $evenement): Response
