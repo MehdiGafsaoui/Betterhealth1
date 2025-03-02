@@ -10,19 +10,32 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 class TherapieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('image', TextType::class, [
-                'label' => 'URL de l\'image',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Entrez l\'URL de l\'image'
-                ]
-            ])
+        ->add('imageFile', FileType::class, [
+            'label' => 'Image (JPG, PNG file)',
+            'mapped' => false, // not directly mapped to the Therapie entity
+            'required' => false, // adjust as needed; in "new" you might set required => true
+            'constraints' => [
+                new File([
+                    'maxSize' => '2M',
+                    'mimeTypes' => [
+                        'image/jpeg',
+                        'image/png',
+                        'image/gif',
+                    ],
+                    'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, GIF)',
+                ])
+            ],
+            'attr' => [
+                'class' => 'form-control',
+            ],
+        ])
             ->add('nom', TextType::class, [
                 'label' => 'Nom',
                 'attr' => [

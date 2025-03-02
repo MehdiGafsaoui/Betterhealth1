@@ -1,12 +1,68 @@
-{# templates/exercice_mental/index.html.twig #}
 {% extends 'Client/index.html.twig' %}
 
 {% block body %}
-<div class="d-flex justify-content-center mt-5 pt-5"> {# Added margin and padding to move content down #}
-  <div class="container w-75"> {# Adjust width as needed #}
+<style>
+    /* Custom styling for the language select */
+    .custom-language-select {
+        border: 2px solid #007bff;
+        border-radius: 5px;
+        padding: 5px 10px;
+        background: linear-gradient(45deg, #e3f2fd, #ffffff);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        font-weight: 500;
+        color: #007bff;
+    }
+    .custom-language-select:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(0,123,255,0.5);
+        border-color: #0056b3;
+    }
+    /* Styling for search form */
+    .search-form {
+        margin-bottom: 1rem;
+    }
+</style>
+
+<div class="d-flex justify-content-center mt-5 pt-5">
+  <div class="container w-75">
+    {# Language select dropdown placed on top right #}
+    <div class="d-flex justify-content-end mb-3">
+        <select id="language-select" class="form-select w-auto custom-language-select">
+            <option value="fr" selected>Français</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="de">Deutsch</option>
+            <option value="ar">العربية</option>
+            <option value="zh">中文</option>
+        </select>
+    </div>
+
+    {# Search and Sorting Form (no submit button) #}
+    <form id="search-sort-form" method="GET" action="{{ path('app_exercice_mental_index') }}" class="search-form">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input id="search-input" type="text" name="search" class="form-control" placeholder="Search by titre, description, or objectif" value="{{ app.request.query.get('search') }}">
+            </div>
+            <div class="col-md-3">
+                <select id="sort-field" name="sortField" class="form-select">
+                    <option value="">Sort by...</option>
+                    <option value="titre" {% if app.request.query.get('sortField') == 'titre' %}selected{% endif %}>Titre</option>
+                    <option value="description" {% if app.request.query.get('sortField') == 'description' %}selected{% endif %}>Description</option>
+                    <option value="objectif" {% if app.request.query.get('sortField') == 'objectif' %}selected{% endif %}>Objectif</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select id="sort-direction" name="sortDirection" class="form-select">
+                    <option value="ASC" {% if app.request.query.get('sortDirection') == 'ASC' %}selected{% endif %}>Ascending</option>
+                    <option value="DESC" {% if app.request.query.get('sortDirection') == 'DESC' %}selected{% endif %}>Descending</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
     <div class="card shadow-sm">
       <div class="card-header bg-primary text-white">
-        <h2 class="mb-0 text-center">Mental Excercice</h2>
+        <h2 class="mb-0 text-center">Mental Exercice</h2>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -22,34 +78,119 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              {% for exercice_mental in exercice_mentals %}
-              <tr>
-                <td>{{ exercice_mental.id }}</td>
-                <td>{{ exercice_mental.videoUrl }}</td>
-                <td>{{ exercice_mental.titre }}</td>
-                <td>{{ exercice_mental.description }}</td>
-                <td>{{ exercice_mental.dureeMinutes }}</td>
-                <td>{{ exercice_mental.objectif }}</td>
-                <td>
-                  <a href="{{ path('app_exercice_mental_show', {'id': exercice_mental.id}) }}" class="btn btn-info btn-sm">Show</a>
-                  <a href="{{ path('app_exercice_mental_edit', {'id': exercice_mental.id}) }}" class="btn btn-warning btn-sm">Edit</a>
-                </td>
-              </tr>
-              {% else %}
-              <tr>
-                <td colspan="7" class="text-center">No records found</td>
-              </tr>
-              {% endfor %}
-            </tbody>
+            {# The table body will be updated via AJAX #}
+            {% include 'exercice_mental/_table.html.twig' %}
           </table>
         </div>
       </div>
       <div class="card-footer text-end">
-        <a href="{{ path('app_exercice_mental_new') }}" class="btn btn-success">Create new</a>
+        <a href="{{ path('app_exercice_mental_new') }}" class="btn btn-success">Create New</a>
       </div>
     </div>
   </div>
 </div>
-{% endblock %}
 
+<script>
+// Debounce function to limit the frequency of AJAX calls
+function debounce(func, delay) {
+    let timer;
+    return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
+function fetchTableData() {
+    // Gather current search and sort values.
+    const search = document.getElementById('search-input').value;
+    const sortField = document.getElementById('sort-field').value;
+    const sortDirection = document.getElementById('sort-direction').value;
+    
+    const params = new URLSearchParams({
+        search: search,
+        sortField: sortField,
+        sortDirection: sortDirection
+    });
+    
+    fetch('{{ path("app_exercice_mental_index") }}?' + params.toString(), {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.content) {
+            // Update the table body with the new content.
+            document.getElementById('exercice-mental-table').outerHTML = data.content;
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching table data:', error);
+    });
+}
+
+// Use the debounced version of the fetch function.
+const debouncedFetch = debounce(fetchTableData, 300);
+
+// Listen to changes on the search input and sort selects.
+document.getElementById('search-input').addEventListener('keyup', debouncedFetch);
+document.getElementById('sort-field').addEventListener('change', debouncedFetch);
+document.getElementById('sort-direction').addEventListener('change', debouncedFetch);
+
+// Translation script remains unchanged
+document.getElementById('language-select').addEventListener('change', function() {
+    const targetLang = this.value;
+    // Query the updated table body after any AJAX update.
+    const tableBody = document.getElementById('exercice-mental-table');
+    const rows = tableBody.querySelectorAll('tr');
+
+    let textsToTranslate = [];
+    let rowMapping = [];
+
+    rows.forEach(row => {
+        const titreElem = row.querySelector('.translatable-titre');
+        const descElem = row.querySelector('.translatable-description');
+        const objectifElem = row.querySelector('.translatable-objectif');
+        if (titreElem && descElem && objectifElem) {
+            textsToTranslate.push(titreElem.innerText.trim());
+            textsToTranslate.push(descElem.innerText.trim());
+            textsToTranslate.push(objectifElem.innerText.trim());
+            rowMapping.push({
+                titre: titreElem,
+                description: descElem,
+                objectif: objectifElem
+            });
+        }
+    });
+
+    if (textsToTranslate.length > 0) {
+        fetch('http://127.0.0.1:5000/translate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                texts: textsToTranslate,
+                target_language: targetLang
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.translated_texts) {
+                const translatedTexts = data.translated_texts;
+                rowMapping.forEach((mapping, index) => {
+                    const baseIndex = index * 3;
+                    mapping.titre.innerText = translatedTexts[baseIndex];
+                    mapping.description.innerText = translatedTexts[baseIndex + 1];
+                    mapping.objectif.innerText = translatedTexts[baseIndex + 2];
+                });
+            } else if (data.error) {
+                alert('Translation error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error during translation:', error);
+            alert('An error occurred during translation.');
+        });
+    }
+});
+</script>
+{% endblock %}

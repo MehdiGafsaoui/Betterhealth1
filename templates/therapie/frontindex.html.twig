@@ -1,0 +1,134 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block body %}
+<div class="d-flex justify-content-center mt-5 pt-5">
+    <div class="card shadow-sm w-75">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">Therapie Index</h2>
+            <select id="language-select" class="form-select w-auto">
+                <option value="fr" selected>Français</option>
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+                <option value="ar">العربية</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="therapie-table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Image</th>
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Objectif</th>
+                            <th>Duree</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for therapie in therapies %}
+                        <tr>
+                            <td>{{ therapie.id }}</td>
+                            <td>
+                                {% if therapie.image %}
+                                    <img src="{{ asset('img/therapie.jpg') }}" alt="{{ therapie.nom }}" style="max-height: 50px;">
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td class="translatable-nom">{{ therapie.nom }}</td>
+                            <td class="translatable-description">{{ therapie.description }}</td>
+                            <td class="translatable-objectif">{{ therapie.objectif }}</td>
+                            <td>{{ therapie.duree }}</td>
+                            <td class="translatable-type">{{ therapie.type }}</td>
+                            <td>
+                                <a href="{{ path('app_therapie_show', {'id': therapie.id}) }}" class="btn btn-info btn-sm">Show</a>
+                                <a href="{{ path('app_therapie_edit', {'id': therapie.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center">No records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <a href="{{ path('app_therapie_new') }}" class="btn btn-success">Create New Therapie</a>
+        </div>
+    </div>
+</div>
+
+<script>
+// When the language selection changes, translate the therapy fields.
+document.getElementById('language-select').addEventListener('change', function() {
+    const targetLang = this.value;
+    const table = document.getElementById('therapie-table');
+    const rows = table.querySelectorAll('tbody tr');
+    
+    // Prepare an array for all texts to translate and a mapping to update the cells later.
+    let textsToTranslate = [];
+    let cellMapping = []; // Each element holds references to the 4 cells in a row
+    
+    rows.forEach(row => {
+        const nomCell = row.querySelector('.translatable-nom');
+        const descriptionCell = row.querySelector('.translatable-description');
+        const objectifCell = row.querySelector('.translatable-objectif');
+        const typeCell = row.querySelector('.translatable-type');
+        
+        if (nomCell && descriptionCell && objectifCell && typeCell) {
+            textsToTranslate.push(nomCell.innerText.trim());
+            textsToTranslate.push(descriptionCell.innerText.trim());
+            textsToTranslate.push(objectifCell.innerText.trim());
+            textsToTranslate.push(typeCell.innerText.trim());
+            
+            cellMapping.push({
+                nomCell: nomCell,
+                descriptionCell: descriptionCell,
+                objectifCell: objectifCell,
+                typeCell: typeCell
+            });
+        }
+    });
+    
+    if (textsToTranslate.length > 0) {
+        fetch('http://127.0.0.1:5000/translate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                texts: textsToTranslate,
+                target_language: targetLang
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.translated_texts) {
+                const translatedTexts = data.translated_texts;
+                // Update each row’s cells with the corresponding translated text.
+                cellMapping.forEach((cells, index) => {
+                    const baseIndex = index * 4;
+                    cells.nomCell.innerText = translatedTexts[baseIndex];
+                    cells.descriptionCell.innerText = translatedTexts[baseIndex + 1];
+                    cells.objectifCell.innerText = translatedTexts[baseIndex + 2];
+                    cells.typeCell.innerText = translatedTexts[baseIndex + 3];
+                });
+            } else if (data.error) {
+                alert('Translation error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error during translation:', error);
+            alert('An error occurred during translation.');
+        });
+    }
+});
+</script>
+{% endblock %}

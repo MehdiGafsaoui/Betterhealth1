@@ -16,6 +16,7 @@
         "dompdf/dompdf": "^3.1",
         "fakerphp/faker": "^1.24",
         "knplabs/knp-paginator-bundle": "^6.6",
+        "endroid/qr-code": "^6.0",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpstan/phpdoc-parser": "^2.0",
         "sendgrid/sendgrid": "^8.1",
@@ -106,6 +107,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.0",
+        "fakerphp/faker": "^1.24",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "7.2.*",
         "symfony/css-selector": "7.2.*",
