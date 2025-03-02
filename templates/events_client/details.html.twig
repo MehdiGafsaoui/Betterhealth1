@@ -1,0 +1,98 @@
+{% extends 'client/index.html.twig' %}
+
+{% block title %}Détails de l'événement - {{ evenement.nom }}{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Conteneur principal */
+        .details-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Image de l'événement */
+        .details-container img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Titre de l'événement */
+        .details-container h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            color: rgb(9, 56, 117); /* Changement de couleur en bleu */
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* Style des informations de l'événement */
+        .details-container p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .details-container p i {
+            font-size: 1.3rem;
+            color:rgb(9, 56, 117); /* Changement de couleur en bleu */
+        }
+
+        /* Bouton retour à la liste */
+        .details-container .btn-back {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color:rgb(9, 56, 117); /* Changement de couleur en bleu */
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            margin-top: 25px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .details-container .btn-back:hover {
+            background-color: rgb(9, 56, 117); /* Changement de couleur en bleu foncé */
+        }
+
+        /* État sans image */
+        .no-image {
+            font-size: 1.2rem;
+            color: #999;
+            text-align: center;
+            padding: 50px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="details-container">
+        <h1>{{ evenement.nom }}</h1>
+        {% if evenement.image %}
+            <img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Image de l'événement">
+        {% else %}
+            <div class="no-image">Aucune image disponible</div>
+        {% endif %}
+        <p><i class="fas fa-calendar-alt"></i> Date de début : {{ evenement.Datedebut|date('d-m-Y H:i') }}</p>
+        <p><i class="fas fa-calendar-alt"></i> Date de fin : {{ evenement.Datefin|date('d-m-Y H:i') }}</p>
+        <p><i class="fas fa-map-marker-alt"></i> Lieu : {{ evenement.Lieu }}</p>
+        <p><i class="fas fa-info-circle"></i> Description : {{ evenement.description }}</p>
+        <a href="{{ path('app_events_client') }}" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Retour à la liste des événements
+        </a>
+    </div>
+{% endblock %}

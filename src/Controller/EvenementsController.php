@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/evenements',) ]
+#[Route('/evenements')]
 final class EvenementsController extends AbstractController
 {
     #[Route(name: 'app_evenements_index', methods: ['GET'])]

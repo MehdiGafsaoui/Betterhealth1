@@ -1,115 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Categorieevenement</title>
-    <style>
-        /* Styles généraux */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 20px;
-            padding: 20px;
-            text-align: center;
-        }
+{% extends 'test/test.html.twig' %}
+{% block body %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Edit Categorieevenement</title>
+        <style>
+            /* Styles généraux */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 20px;
+                padding: 20px;
+                text-align: center;
+            }
 
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
+            h1 {
+                color: #333;
+                margin-bottom: 20px;
+                margin-top: 80px; /* Décalage plus bas */
+            }
 
-        /* Styles pour les liens */
-        a {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            background-color: #007bff;
-        }
+            /* Conteneur du formulaire */
+            .form-container {
+                background: white;
+                padding: 25px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                max-width: 500px;
+                margin: 30px auto;
+                text-align: left;
+            }
 
-        a:hover {
-            background-color: #0056b3;
-        }
+            .form-container label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                color: #333;
+            }
 
-        /* Styles pour le bouton "back to list" */
-        .btn-back {
-            background-color: #6c757d;
-        }
+            .form-container input[type="text"],
+            .form-container input[type="submit"],
+            .btn-update {
+                width: 100%;
+                padding: 12px;
+                margin-top: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 16px;
+            }
 
-        .btn-back:hover {
-            background-color: #5a6268;
-        }
+            .btn-update {
+                background-color: #28a745;
+                color: white;
+                border: none;
+                cursor: pointer;
+                transition: background 0.3s ease-in-out;
+            }
 
-        /* Styles pour le formulaire */
-        .form-container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: 0 auto;
-            text-align: left;
-        }
+            .btn-update:hover {
+                background-color: #218838;
+            }
 
-        .form-container label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
+            /* Styles pour les boutons */
+            .btn-container {
+                margin-top: 20px;
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+            }
 
-        .form-container input[type="text"],
-        .form-container input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
+            .btn {
+                display: inline-block;
+                padding: 12px 20px;
+                border-radius: 6px;
+                text-decoration: none;
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                transition: background 0.3s ease-in-out;
+            }
 
-        .form-container input[type="submit"] {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+            .btn-back {
+                background-color: #6c757d;
+            }
 
-        .form-container input[type="submit"]:hover {
-            background-color: #218838;
-        }
+            .btn-back:hover {
+                background-color: #5a6268;
+            }
 
-        /* Styles pour le bouton de suppression */
-        .btn-delete {
-            background-color: #dc3545;
-            border: none;
-            cursor: pointer;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
+            .btn-delete {
+                background-color: #dc3545;
+                border: none;
+                cursor: pointer;
+                padding: 12px 20px;
+                font-weight: bold;
+                border-radius: 6px;
+            }
 
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
-    </style>
-</head>
-<body>
-    {% block body %}
+            .btn-delete:hover {
+                background-color: #c82333;
+            }
+
+        </style>
+    </head>
+    <body>
         <h1>Edit Categorieevenement</h1>
 
         <div class="form-container">
-            {{ include('categorieevenement/_form.html.twig', {'button_label': 'Update'}) }}
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn-update">Update</button>
+            {{ form_end(form) }}
         </div>
 
-        <a href="{{ path('app_categorieevenement_index') }}" class="btn-back">Back to list</a>
-
-        {{ include('categorieevenement/_delete_form.html.twig') }}
-    {% endblock %}
-</body>
-</html>
+        <div class="btn-container">
+            <a href="{{ path('app_categorieevenement_index') }}" class="btn btn-back">Back to list</a>
+            {{ include('categorieevenement/_delete_form.html.twig') }}
+        </div>
+    </body>
+    </html>
+{% endblock %}

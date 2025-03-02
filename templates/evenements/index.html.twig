@@ -1,7 +1,7 @@
-{% extends 'client/index.html.twig' %}
+{% extends 'test/test.html.twig' %}
 
 {% block body %}
-
+ {% include 'chatbot.html.twig' %}
     <!-- Centered search input with margin-top -->
     <div style="display: flex; justify-content: center; margin-top: 100px;">
         <input type="search" id="myInput" class="form-control" placeholder="Search event" 
@@ -21,7 +21,7 @@
         });
     </script>
 
-    <h1 class="text-center" style="margin-top: 40px;">Events</h1>
+    <h1 class="text-center" style="margin-top: 40px;">Evenements index</h1>
 
     <!-- Wrapper to center table -->
     <div style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
@@ -56,12 +56,7 @@
                         </td>
                         <td>
                             <a href="{{ path('app_evenements_show', {'id': evenement.id}) }}" class="btn btn-show">Show</a>
-                            {% if app.user %}
-                            {% if 'ROLE_ADMIN' in app.user.roles %}
                             <a href="{{ path('app_evenements_edit', {'id': evenement.id}) }}" class="btn btn-edit">Edit</a>
-                            {% endif %}
-                            {% endif %} 
-
                         </td>
                     </tr>
                 {% else %}
@@ -73,12 +68,10 @@
         </table>
     </div>
 
-    <!-- Centering the "Create new" button -->
+    <!-- Centering the buttons -->
     <div class="text-center" style="margin-top: 20px;">
-    {% if 'ROLE_ADMIN' in app.user.roles %}
         <a href="{{ path('app_evenements_new') }}" class="btn btn-primary">Create new</a>
-        {% endif %}
-
+        <a href="{{ path('app_categorieevenement_index') }}" class="btn btn-secondary">liste des catégories</a>
     </div>
 
     <!-- Styles for the buttons and header -->
@@ -102,11 +95,11 @@
         }
 
         .btn-edit {
-            background-color:rgb(80, 137, 198);
+            background-color: #007bff;
         }
 
         .btn-edit:hover {
-            background-color:rgb(97, 22, 2);
+            background-color: #0056b3;
         }
 
         .btn-primary {
@@ -117,9 +110,17 @@
             background-color: #218838;
         }
 
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
         /* Custom style for the header row */
         .table-header th {
-            background-color: rgb(63, 110, 160);
+            background-color: rgb(9, 56, 117);
             color: white;
         }
 

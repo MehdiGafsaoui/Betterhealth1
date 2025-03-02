@@ -60,7 +60,7 @@ class EvenementsType extends AbstractType
             ->add('categorie', null, [
                 'label' => 'Catégorie',
                 'required' => true,
-                'choice_label' => 'nom', // Ici, on suppose que l'entité Categorieevenement a un champ "nom"
+                'choice_label' => 'nom', 
             ])
             ->add('image', FileType::class, [
                 'label' => 'Image de l\'événement (optionnel)',

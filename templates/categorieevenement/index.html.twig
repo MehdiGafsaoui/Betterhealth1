@@ -1,102 +1,107 @@
-<!DOCTYPE html>
-
-<title>Category of event</title>
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 20px;
-        padding: 20px;
-    }
-
-    h1 {
-        text-align: center;
-        color: #333;
-    }
-
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        background: white;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .table th, .table td {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: left;
-    }
-
-    .table th {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .table tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    .table tr:hover {
-        background-color: #ddd;
-    }
-
-    a {
-        text-decoration: none;
-        color: #007bff;
-        font-weight: bold;
-        margin-right: 10px;
-    }
-
-    a:hover {
-        color: #0056b3;
-        text-decoration: underline;
-    }
-
-    .btn-new {
-        display: inline-block;
-        padding: 10px 15px;
-        background-color: #28a745;
-        color: white;
-        text-align: center;
-        border-radius: 5px;
-        margin-top: 20px;
-    }
-
-    .btn-new:hover {
-        background-color: #218838;
-    }
-</style>
-
+{% extends 'test/test.html.twig' %}
 {% block body %}
-    <h1>Categorieevenement index</h1>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Category of event</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 20px;
+                padding: 20px;
+            }
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for categorieevenement in categorieevenements %}
-            <tr>
-                <td>{{ categorieevenement.id }}</td>
-                <td>{{ categorieevenement.nom }}</td>
-                <td>
-                    <a href="{{ path('app_categorieevenement_show', {'id': categorieevenement.id}) }}">Show</a>
-                    <a href="{{ path('app_categorieevenement_edit', {'id': categorieevenement.id}) }}">Edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">No records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            h1 {
+                text-align: center;
+                color: #333;
+                margin-top: 50px; /* Ajout d'une marge en haut pour décaler le titre */
+            }
 
-    <a href="{{ path('app_categorieevenement_new') }}" class="btn-new">Create New</a>
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+                background: white;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .table th, .table td {
+                border: 1px solid #ddd;
+                padding: 10px;
+                text-align: left;
+            }
+
+            .table th {
+                background-color: #007bff;
+                color: white;
+            }
+
+            .table tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            .table tr:hover {
+                background-color: #ddd;
+            }
+
+            a {
+                text-decoration: none;
+                color: #007bff;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+
+            a:hover {
+                color: #0056b3;
+                text-decoration: underline;
+            }
+
+            .btn-new {
+                display: inline-block;
+                padding: 10px 15px;
+                background-color: #28a745;
+                color: white;
+                text-align: center;
+                border-radius: 5px;
+                margin-top: 20px;
+            }
+
+            .btn-new:hover {
+                background-color: #218838;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Categorieevenement index</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for categorieevenement in categorieevenements %}
+                <tr>
+                    <td>{{ categorieevenement.id }}</td>
+                    <td>{{ categorieevenement.nom }}</td>
+                    <td>
+                        <a href="{{ path('app_categorieevenement_show', {'id': categorieevenement.id}) }}">Show</a>
+                        <a href="{{ path('app_categorieevenement_edit', {'id': categorieevenement.id}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_categorieevenement_new') }}" class="btn-new">Create New</a>
+    </body>
+    </html>
 {% endblock %}

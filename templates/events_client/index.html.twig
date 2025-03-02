@@ -1,9 +1,200 @@
 {% extends 'client/index.html.twig' %}
 
-{% block body %}
-    <h1 class="text-center" style="margin-top: 80px;">list of Events</h1>
+{% block stylesheets %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
 
-    <!-- Affichage des messages flash -->
+        .hero-section {
+            text-align: center;
+            background: linear-gradient(135deg, rgb(9, 56, 117), #8ab4f8);
+            padding: 60px 20px;
+            color: white;
+            font-size: 1.7rem;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section h1 {
+            color: #fff;
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            text-align: center;
+            margin: 40px 0;
+            font-weight: 700;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .search-container input {
+            width: 50%;
+            padding: 14px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-container input:focus {
+            border-color: rgb(9, 56, 117);
+            box-shadow: 0 0 10px rgba(9, 56, 117, 0.3);
+        }
+
+        .evenements-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 40px auto;
+            padding: 0 20px;
+            max-width: 1400px;
+        }
+
+        .evenement-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .evenement-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .evenement-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .evenement-info {
+            text-align: left;
+            padding: 10px 0;
+        }
+
+        .evenement-info p {
+            margin: 5px 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .evenement-info i {
+            font-size: 1.3rem;
+            color: rgb(9, 56, 117);
+        }
+
+        .evenement-card h3 {
+            font-size: 1.9rem;
+            color: rgb(9, 56, 117);
+            margin: 10px 0;
+            font-weight: 700;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .btn-details, .btn-reserver {
+            background-color: rgb(9, 56, 117);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            flex: 1;
+            text-align: center;
+            margin: 0 5px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-details i, .btn-reserver i {
+            font-size: 1.2rem;
+        }
+
+        .btn-details:hover, .btn-reserver:hover {
+            background-color: rgb(7, 42, 88);
+            transform: scale(1.05);
+        }
+
+        /* Pagination Styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination a, .pagination span {
+            display: block;
+            padding: 10px 15px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.3s;
+        }
+
+        .pagination a:hover {
+            background-color: rgb(9, 56, 117);
+            color: #fff;
+        }
+
+        .pagination .current {
+            background-color: rgb(9, 56, 117);
+            color: #fff;
+            border-color: rgb(9, 56, 117);
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+{% include 'chatbot.html.twig' %}
+    <div class="hero-section">
+        <h1>🏥 Explorez nos événements santé 🏥</h1>
+        <p>Découvrez des événements passionnants pour votre bien-être ! 🚀✨</p>
+    </div>
+
     <div class="container">
         {% for label, messages in app.flashes %}
             {% for message in messages %}
@@ -14,64 +205,50 @@
         {% endfor %}
     </div>
 
-    <!-- Barre de recherche -->
-    <div class="text-center" style="margin-top: 50px;">
-        <input type="search" id="myInput" class="form-control w-50 mx-auto" placeholder="Rechercher un événement...">
+   
+
+    <div class="search-container">
+        <input type="search" id="myInput" class="form-control" placeholder="Rechercher un événement...">
     </div>
 
-    <!-- Tableau des événements -->
-    <div style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
-        <table class="table table-bordered" style="width: 80%; text-align: center; margin-top: 30px; margin-bottom: 20px; border: 2px solid blue;">
-            <thead>
-                <tr style="background-color: #f0f8ff;"> 
-                    <th style="border: 2px solid blue;">Id</th>
-                    <th style="border: 2px solid blue;">Nom</th>
-                    <th style="border: 2px solid blue;">Description</th>
-                    <th style="border: 2px solid blue;">Date début</th>
-                    <th style="border: 2px solid blue;">Date fin</th>
-                    <th style="border: 2px solid blue;">Lieu</th>
-                    <th style="border: 2px solid blue;">Image</th>
-                    <th style="border: 2px solid blue;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for evenement in evenements %}
-                    <tr>
-                        <td style="border: 2px solid blue;">{{ evenement.id }}</td>
-                        <td style="border: 2px solid blue;">{{ evenement.nom }}</td>
-                        <td style="border: 2px solid blue;">{{ evenement.description }}</td>
-                        <td style="border: 2px solid blue;">{{ evenement.Datedebut ? evenement.Datedebut|date('Y-m-d') : '' }}</td>
-                        <td style="border: 2px solid blue;">{{ evenement.Datefin ? evenement.Datefin|date('Y-m-d') : '' }}</td>
-                        <td style="border: 2px solid blue;">{{ evenement.Lieu }}</td>
-                        <td style="border: 2px solid blue;">
-                            {% if evenement.image %}
-                                <img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Image de l'événement" style="width: 100px; height: auto;">
-                            {% else %}
-                                <span>Pas d'image</span>
-                            {% endif %}
-                        </td>
-                        <td style="border: 2px solid blue;">
-                            <a href="{{ path('app_evenements_participate', {'id': evenement.id}) }}" class="btn btn-success btn-sm">
-                                Participer
-                            </a>
-                        </td>
-                    </tr>
+    <div class="evenements-container" id="evenements-container">
+        {% for evenement in pagination %}
+            <div class="evenement-card">
+                {% if evenement.image %}
+                    <img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Image de l'événement">
                 {% else %}
-                    <tr>
-                        <td colspan="8" style="border: 2px solid blue;">Aucun événement trouvé</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    <div>Aucune image</div>
+                {% endif %}
+                <h3>{{ evenement.nom }}</h3>
+                <div class="evenement-info">
+                    <p><i class="far fa-calendar-alt"></i> {{ evenement.Datedebut ? evenement.Datedebut|date('d-m-Y') : '' }} - {{ evenement.Datefin ? evenement.Datefin|date('d-m-Y') : '' }}</p>
+                    <p><i class="fas fa-map-marker-alt"></i> {{ evenement.Lieu }}</p>
+                </div>
+                <div class="btn-container">
+                    <a href="{{ path('app_evenements_details', {'id': evenement.id}) }}" class="btn btn-details">
+                        <i class="fas fa-info-circle"></i> Détails
+                    </a>
+                    <a href="{{ path('app_evenements_participate', {'id': evenement.id}) }}" class="btn btn-reserver">
+                        <i class="fas fa-calendar-check"></i> Participer
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <p>Aucun événement trouvé.</p>
+        {% endfor %}
     </div>
 
-    <!-- Script pour la recherche en temps réel -->
+    <!-- Pagination -->
+    <div class="pagination">
+        {{ knp_pagination_render(pagination, '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig') }}
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("table tbody tr").filter(function () {
+                $(".evenement-card").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
