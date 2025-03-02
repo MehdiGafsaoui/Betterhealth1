@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de Participation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #093875;
+            text-align: center;
+        }
+        .details {
+            margin-top: 20px;
+        }
+        .details p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Confirmation de Participation</h1>
+    <div class="details">
+        <p><strong>Nom de l'événement :</strong> {{ evenement.nom }}</p>
+        <p><strong>Description :</strong> {{ evenement.description }}</p>
+        <p><strong>Date de début :</strong> {{ evenement.Datedebut ? evenement.Datedebut|date('Y-m-d') : '' }}</p>
+        <p><strong>Date de fin :</strong> {{ evenement.Datefin ? evenement.Datefin|date('Y-m-d') : '' }}</p>
+        <p><strong>Lieu :</strong> {{ evenement.Lieu }}</p>
+        <p><strong>Nombre de places réservées :</strong> {{ nombrePlaces }}</p>
+    </div>
+    <div class="footer">
+        <!-- Utilisation de la propriété fullName -->
+        <p>Merci pour votre participation, {{ user.fullName }} !</p>
+        <!-- Ou utilisation de la propriété email -->
+        <!-- <p>Merci pour votre participation, {{ user.email }} !</p> -->
+    </div>
+</body>
+</html>

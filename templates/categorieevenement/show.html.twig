@@ -1,103 +1,108 @@
-<!DOCTYPE html>
-
-<title>Categorieevenement</title>
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 20px;
-        padding: 20px;
-        text-align: center;
-    }
-
-    h1 {
-        color: #333;
-    }
-
-    .table {
-        width: 50%;
-        margin: 20px auto;
-        border-collapse: collapse;
-        background: white;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    .table th, .table td {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: left;
-    }
-
-    .table th {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .buttons {
-        margin-top: 20px;
-    }
-
-    .btn {
-        display: inline-block;
-        margin: 5px;
-        padding: 10px 15px;
-        border-radius: 5px;
-        text-decoration: none;
-        color: white;
-        font-weight: bold;
-    }
-
-    .btn-back {
-        background-color: #6c757d;
-    }
-
-    .btn-back:hover {
-        background-color: #5a6268;
-    }
-
-    .btn-edit {
-        background-color: #007bff;
-    }
-
-    .btn-edit:hover {
-        background-color: #0056b3;
-    }
-
-    .btn-delete {
-        background-color: #dc3545; /* Rouge */
-        border: none;
-        cursor: pointer;
-    }
-
-    .btn-delete:hover {
-        background-color: #c82333; /* Rouge plus foncé au survol */
-    }
-</style>
-
+{% extends 'test/test.html.twig' %}
 {% block body %}
-    <h1>Categorieevenement</h1>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Categorieevenement</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 20px;
+                padding: 20px;
+                text-align: center;
+            }
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ categorieevenement.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ categorieevenement.nom }}</td>
-            </tr>
-        </tbody>
-    </table>
+            h1 {
+                color: #333;
+                margin-top: 50px; /* Ajout d'une marge en haut pour décaler le titre */
+            }
 
-    <div class="buttons">
-        <a href="{{ path('app_categorieevenement_index') }}" class="btn btn-back">Back to list</a>
-        <a href="{{ path('app_categorieevenement_edit', {'id': categorieevenement.id}) }}" class="btn btn-edit">Edit</a>
-        <a href="#" class="btn btn-delete">Delete</a> <!-- Bouton Delete avec style rouge -->
-    </div>
+            .table {
+                width: 50%;
+                margin: 20px auto;
+                border-collapse: collapse;
+                background: white;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                overflow: hidden;
+            }
 
-    {{ include('categorieevenement/_delete_form.html.twig') }}
+            .table th, .table td {
+                border: 1px solid #ddd;
+                padding: 10px;
+                text-align: left;
+            }
+
+            .table th {
+                background-color: #007bff;
+                color: white;
+            }
+
+            .buttons {
+                margin-top: 20px;
+            }
+
+            .btn {
+                display: inline-block;
+                margin: 5px;
+                padding: 10px 15px;
+                border-radius: 5px;
+                text-decoration: none;
+                color: white;
+                font-weight: bold;
+            }
+
+            .btn-back {
+                background-color: #6c757d;
+            }
+
+            .btn-back:hover {
+                background-color: #5a6268;
+            }
+
+            .btn-edit {
+                background-color: #007bff;
+            }
+
+            .btn-edit:hover {
+                background-color: #0056b3;
+            }
+
+            .btn-delete {
+                background-color: #dc3545; /* Rouge */
+                border: none;
+                cursor: pointer;
+            }
+
+            .btn-delete:hover {
+                background-color: #c82333; /* Rouge plus foncé au survol */
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Categorieevenement</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ categorieevenement.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ categorieevenement.nom }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="buttons">
+            <a href="{{ path('app_categorieevenement_index') }}" class="btn btn-back">Back to list</a>
+            <a href="{{ path('app_categorieevenement_edit', {'id': categorieevenement.id}) }}" class="btn btn-edit">Edit</a>
+            <a href="#" class="btn btn-delete">Delete</a> <!-- Bouton Delete avec style rouge -->
+        </div>
+
+        {{ include('categorieevenement/_delete_form.html.twig') }}
+    </body>
+    </html>
 {% endblock %}

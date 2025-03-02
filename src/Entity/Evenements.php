@@ -8,8 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\NotNull;
-
 
 #[ORM\Entity(repositoryClass: EvenementsRepository::class)]
 class Evenements
@@ -19,13 +17,24 @@ class Evenements
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     #[Assert\NotBlank(message: "Le nom ne peut pas être vide.")]
-    #[Assert\Length(max: 255, maxMessage: "Le nom ne peut pas dépasser 255 caractères.")]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: "Le nom ne peut pas dépasser 100 caractères."
+    )]
+    #[Assert\Regex(
+        pattern: "/^[^\d]*$/",
+        message: "Le nom ne doit pas contenir de chiffres."
+    )]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "La description ne peut pas être vide.")]
+    #[Assert\Regex(
+        pattern: "/^[^\d]*$/",
+        message: "La description ne doit pas contenir de chiffres."
+    )]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -53,7 +62,6 @@ class Evenements
     private Collection $participations;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Url(message: "L'image doit être une URL valide.")]
     private ?string $image = null;
 
     public function __construct()

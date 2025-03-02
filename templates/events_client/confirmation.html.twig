@@ -1,52 +1,194 @@
-{% extends 'client/index.html.twig' %}
 
 {% block body %}
     <div class="container mt-4">
-        <h1 class="text-center">Confirmation of participation</h1>
-        <div class="alert alert-success text-center">
-            Votre participation à l'événement <strong>{{ evenement.nom }}</strong> a été enregistrée avec succès.
+        <h1 class="text-center">Confirmation de participation</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="event-details">
+            <p><strong>Nom :</strong> {{ evenement.nom }}</p>
+            <p><strong>Description :</strong> {{ evenement.description }}</p>
+            <p><strong>Date de début :</strong> {{ evenement.Datedebut ? evenement.Datedebut|date('Y-m-d') : '' }}</p>
+            <p><strong>Date de fin :</strong> {{ evenement.Datefin ? evenement.Datefin|date('Y-m-d') : '' }}</p>
+            <p><strong>Lieu :</strong> {{ evenement.Lieu }}</p>
+            <p><strong>Nombre de places réservées :</strong> {{ nombrePlaces }}</p>
         </div>
 
-        <h2 class="text-center">Détails de l'événement</h2>
-        <table class="table table-bordered mx-auto" style="width: 80%;">
-            <tbody>
-                <tr>
-                    <th>Nom</th>
-                    <td>{{ evenement.nom }}</td>
-                </tr>
-                <tr>
-                    <th>Description</th>
-                    <td>{{ evenement.description }}</td>
-                </tr>
-                <tr>
-                    <th>Date de début</th>
-                    <td>{{ evenement.Datedebut ? evenement.Datedebut|date('Y-m-d') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Date de fin</th>
-                    <td>{{ evenement.Datefin ? evenement.Datefin|date('Y-m-d') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Lieu</th>
-                    <td>{{ evenement.Lieu }}</td>
-                </tr>
-                <tr>
-                    <th>Image</th>
-                    <td>
-                        {% if evenement.image %}
-                            <img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Image de l'événement" style="width: 100px; height: auto;">
-                        {% else %}
-                            <span>Pas d'image</span>
-                        {% endif %}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="reservation-form-container">
+            <h3 class="choose-seats-title"><i class="fas fa-users"></i> Choisir le nombre de places</h3>
+            <form action="{{ path('app_reserver', {'id': evenement.id}) }}" method="post">
+                <label for="nombre_places" class="form-label">Nombre de places :</label>
+                <input 
+                    type="number" 
+                    id="nombre_places" 
+                    name="nombre_places" 
+                    min="1" 
+                    max="10" 
+                    value="1" 
+                    required 
+                    class="input-number"
+                >
+                <button type="submit" class="btn-reserver"><i class="fas fa-ticket-alt"></i> Réserver</button>
+            </form>
+        </div>
 
+        <p class="thank-you-note">Nous avons hâte de vous y voir!</p>
         <div class="text-center mt-4">
+            <!-- Bouton pour exporter en PDF -->
+            <a href="{{ path('app_export_pdf', {'id': evenement.id}) }}" class="btn btn-pdf">
+                <i class="fas fa-file-pdf"></i> Exporter en PDF
+            </a>
             <a href="{{ path('app_events_client') }}" class="btn btn-primary">
                 Retour à la liste des événements
             </a>
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+  <style>
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 25px;
+      background-color: #f4f8f9;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: rgb(9, 56, 117);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .alert-success {
+      font-size: 1.2rem;
+      color: #155724;
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+    .event-details p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      color: #555;
+    }
+
+    .reservation-form-container {
+      background-color: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    .choose-seats-title {
+      font-size: 1.6rem;
+      color: rgb(9, 56, 117);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .choose-seats-title i {
+      margin-right: 12px;
+      color: rgb(9, 56, 117);
+    }
+
+    .form-label {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .input-number {
+      padding: 12px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      width: 80%;
+      max-width: 270px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      transition: border 0.3s;
+    }
+
+    .input-number:focus {
+      border-color: rgb(9, 56, 117);
+      outline: none;
+    }
+
+    .btn-reserver {
+      background-color: rgb(9, 56, 117);
+      color: white;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-reserver i {
+      margin-right: 8px;
+    }
+
+    .btn-reserver:hover {
+      background-color: rgb(7, 42, 88);
+    }
+
+    .thank-you-note {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-top: 30px;
+      color: #777;
+    }
+
+    .btn-primary {
+      background-color: rgb(9, 56, 117);
+      color: white;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: rgb(7, 42, 88);
+    }
+
+    /* Style pour le bouton PDF */
+    .btn-pdf {
+      background-color: #d9534f; /* Rouge */
+      color: white;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-right: 10px; /* Espacement entre les boutons */
+    }
+
+    .btn-pdf:hover {
+      background-color: #c9302c; /* Rouge foncé au survol */
+    }
+
+    .btn-pdf i {
+      margin-right: 8px;
+    }
+  </style>
 {% endblock %}
