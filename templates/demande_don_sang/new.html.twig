@@ -1,0 +1,60 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block body %}
+    <div class="table-container">
+        <title>New DemandeDonSang</title>
+        <h1 class="text-center mb-4">Create New DemandeDonSang</h1>
+
+        <div class="form-container" style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-signin'}}) }}
+            
+                <div class="mb-3">
+                    {{ form_row(form.groupesanguain, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le groupe sanguin'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_row(form.quantite, {'attr': {'class': 'form-control', 'placeholder': 'Entrez la quantité'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_row(form.status, {'attr': {'class': 'form-control', 'placeholder': 'Statut de la demande'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_row(form.user, {'attr': {'class': 'form-control', 'style': 'display: none;'}}) }} <!-- Hidden field for user -->
+                </div>
+
+                <div class="mb-3">
+                    {{ form_row(form.CentreDeDon, {'attr': {'class': 'form-control', 'placeholder': 'Select Centre de Don'}}) }}
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+                </div>
+            
+            {{ form_end(form) }}
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="{{ path('app_demande_don_sang_index') }}" class="btn btn-secondary">Back to list</a>
+        </div>
+    </div>
+    <style>
+        .table-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            margin-top: -50px; /* Adjust if needed to account for header */
+        }
+
+        .table {
+            margin: auto; /* Centers the table */
+        }
+    </style>
+{% endblock %}
+
+{% block stylesheets %}
+    
+{% endblock %}

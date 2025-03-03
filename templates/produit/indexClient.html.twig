@@ -1,0 +1,106 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+
+
+        .col-md-4.mb-4:hover {
+            transform: translateY(-5px);
+            background-color: lightgray;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="w-100">
+            <h1 class="my-4 text-center">Products Available</h1>
+
+            <div class="text-end mb-4">
+                <a href="{{ path('app_panier_index') }}" class="btn btn-primary">
+                    <i class="fas fa-shopping-cart"></i> 🛒 Cart (<span id="cart-count">{{ cartCount }}</span>)
+                </a>
+            </div>
+
+            <div class="row">
+                {% if produits|length > 0 %}
+                    {% for produit in produits %}
+                        {% if produit.quantite != 0 %}
+                            <div class="col-md-4 mb-4">
+                                <a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="carte-link">
+                                    <div class="card shadow">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ produit.nom }}</h5>
+                                            <p class="card-text">{{ produit.description|slice(0, 100) }}{% if produit.description|length > 100 %}...{% endif %}</p>
+                                            <p class="card-text"><strong>Availability:</strong> {{ produit.quantite }}</p>
+                                            <p class="card-text"><strong>Category:</strong> {{ produit.categorie.nom }}</p>
+                                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                                                <a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                                            {% endif %}
+                                            <br>
+                                            <div class="text-center">
+                                                <a href="{{ path('app_produit_get', {'id': produit.id}) }}" class="btn btn-success btn-sm">Get</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <p class="text-center">No products in the cart</p>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="text-center">
+                <form action="{{ path('app_panier_submit') }}" method="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token('submit_order') }}">
+                    <button type="submit" class="btn btn-info btn-bg">Submit Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.querySelectorAll('.btn-success').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const url = this.getAttribute('href');
+
+                fetch(url)
+                    .then(() => {
+                        location.reload();
+                    });
+            });
+        });
+    </script>
+
+    <script>
+        document.querySelector('.btn-info.btn-bg').addEventListener('click', function(event) {
+            event.preventDefault();
+
+            fetch('{{ path('app_panier_submit') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-Token': '{{ csrf_token('submit_order') }}'
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                        alert('Order submitted successfully');
+                    } else {
+                        console.error('Order submission failed');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+    </script>
+{% endblock %}

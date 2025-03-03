@@ -1,0 +1,126 @@
+<html>
+<head>
+    <title>Edit Evenements</title>
+    {% block styles %}
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 20px;
+                padding: 20px;
+            }
+
+            h1 {
+                color: #333;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .form-container {
+                background-color: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .form-container label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                color: #555;
+            }
+
+            .form-container input,
+            .form-container textarea,
+            .form-container select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+
+            .form-container button {
+                background-color: #007bff;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .form-container button:hover {
+                background-color: #0056b3;
+            }
+
+            .back-link {
+                display: inline-block;
+                margin-top: 20px;
+                color: #007bff;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+            .back-link:hover {
+                text-decoration: underline;
+            }
+
+            .delete-form {
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .delete-form button {
+                background-color: #dc3545;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .delete-form button:hover {
+                background-color: #c82333;
+            }
+
+            .current-image {
+                margin-top: 15px;
+                text-align: center;
+            }
+
+            .current-image img {
+                max-width: 200px;
+                height: auto;
+                border-radius: 8px;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <h1>Edit Evenements</h1>
+
+        <div class="form-container">
+            {{ include('evenements/_form.html.twig', {'button_label': 'Update'}) }}
+
+            {% if evenement.image %}
+                <div class="current-image">
+                    <p>Image actuelle :</p>
+                    <img src="{{ asset('uploads/images/' ~ evenement.image) }}" alt="Image actuelle de l'événement">
+                </div>
+            {% endif %}
+        </div>
+
+        <a class="back-link" href="{{ path('app_evenements_index') }}">Back to list</a>
+
+        <div class="delete-form">
+            {{ include('evenements/_delete_form.html.twig') }}
+        </div>
+    {% endblock %}
+</body>
+</html>

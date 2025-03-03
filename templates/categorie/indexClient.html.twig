@@ -1,0 +1,36 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="w-100">
+            <h1 class="my-4 text-center">Categories</h1>
+
+
+            <div class="row">
+                {% if categories|length > 0 %}
+                    {% for categorie in categories %}
+                            <div class="col-md-4 mb-4">
+                                <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}" class="carte-link">
+                                    <div class="card shadow">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ categorie.nom }}</h5>
+                                            <p class="card-text">{{ categorie.description|slice(0, 100) }}{% if categorie.description|length > 100 %}...{% endif %}</p>
+                                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                                                <a href="{{ path('app_produit_edit', {'id': categorie.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <p class="text-center">No categories available!</p>
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

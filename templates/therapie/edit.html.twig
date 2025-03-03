@@ -1,0 +1,23 @@
+{% extends 'Client/index.html.twig' %}
+
+
+{% block body %}
+<div class="container mt-5 pt-5"> {# Pushes content down to avoid overlap with header #}
+    <div class="d-flex justify-content-center">
+        <div class="w-75">
+            <h1 class="text-center">Edit Therapie</h1>
+            <br><br>
+            {{ include('therapie/_form.html.twig', {'button_label': 'Update'}) }}
+
+            <div class="text-center mt-3">
+                <a href="{{ path('app_therapie_index') }}" class="btn btn-secondary">Back to List</a>
+            </div>
+
+            <div class="mt-3">
+                {{ include('therapie/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

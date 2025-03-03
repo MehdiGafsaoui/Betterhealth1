@@ -1,0 +1,43 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block title %}Welcome to BetterHealth{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="text-center w-100">
+            <h1 class="mb-4">Welcome to BetterHealth</h1>
+            <p class="lead">Donate or request medical products for those in need.</p>
+
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">View Products</h5>
+                            <p class="card-text">Browse available medical products for donation or request.</p>
+                            <a href="{{ path('app_produit_index_client') }}" class="btn btn-primary">View Products</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">View Categories</h5>
+                            <p class="card-text">Explore different categories of medical products available for donation.</p>
+                            <a href="{{ path('app_categorie_index_client') }}" class="btn btn-success">View Categories</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Donate a Product</h5>
+                            <p class="card-text">Donate medical products to those in need.</p>
+                            <a href="{{ path('app_produit_new') }}" class="btn btn-info">Donate Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

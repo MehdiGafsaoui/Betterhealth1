@@ -1,0 +1,28 @@
+{% extends 'Client/index.html.twig' %}
+
+<div class="table-container">
+<title>Edit DemandeDonSang</title>
+
+{% block body %}
+    <h1>Edit DemandeDonSang</h1>
+
+    {{ include('demande_don_sang/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_demande_don_sang_index') }}">back to list</a>
+
+    {{ include('demande_don_sang/_delete_form.html.twig') }}
+    </div>
+    <style>
+.table-container {
+    margin-top: 100px; /* Adjust according to your header height */
+    text-align: center; /* Centers the title */
+}
+
+.table {
+    margin: auto; /* Centers the table */
+}
+</style>
+{% endblock %}
+{% block style %}
+
+{% endblock %}

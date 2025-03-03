@@ -1,0 +1,59 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block body %}
+<div class="d-flex justify-content-center mt-5 pt-5"> {# Increased margin and padding #}
+    <div class="card shadow-sm w-75">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0 text-center">Therapie Index</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Image</th>
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Objectif</th>
+                            <th>Duree</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for therapie in therapies %}
+                        <tr>
+                            <td>{{ therapie.id }}</td>
+                            <td>
+                                {% if therapie.image %}
+                                    <img src="{{ asset('img/therapie.jpg') }}" alt="{{ therapie.nom }}" style="max-height: 50px;">
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>{{ therapie.nom }}</td>
+                            <td>{{ therapie.description }}</td>
+                            <td>{{ therapie.objectif }}</td>
+                            <td>{{ therapie.duree }}</td>
+                            <td>{{ therapie.type }}</td>
+                            <td>
+                                <a href="{{ path('app_therapie_show', {'id': therapie.id}) }}" class="btn btn-info btn-sm">Show</a>
+                                <a href="{{ path('app_therapie_edit', {'id': therapie.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center">No records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <a href="{{ path('app_therapie_new') }}" class="btn btn-success">Create New Therapie</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'client/index.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        .charts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 40px;
+        }
+
+        .chart-container {
+            width: 60%;
+            min-width: 400px;
+            background: darkgray;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .chart-container h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .progress {
+            height: 25px;
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}Statistics Dashboard{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="w-100">
+            <h1 class="my-4 text-center">Statistics</h1>
+            <br>
+            <h3 class="text-center">Produits par catégorie</h3>
+
+            <!-- Display category counts -->
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Category ID</th>
+                    <th>Category Name</th>
+                    <th>Count</th>
+                    <th>Percentage</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for category in categoryCounts %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.category }}</td>
+                        <td>{{ category.count }}</td>
+                        <td>{{ category.percentage }}%</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Bootstrap Progress Bar Chart -->
+            <div class="chart-container mt-4">
+                <h3 class="text-center">Category Distribution</h3>
+                {% for category in categoryCounts %}
+                    <div class="mb-2">
+                        <strong>{{ category.category }} ({{ category.percentage }}%)</strong>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar"
+                                 style="width: {{ category.percentage }}%; background-color: hsl({{ loop.index * 50 }}, 70%, 50%);"
+                                 aria-valuenow="{{ category.percentage }}"
+                                 aria-valuemin="0" aria-valuemax="100">
+                                {{ category.percentage }}%
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+

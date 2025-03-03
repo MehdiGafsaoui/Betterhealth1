@@ -1,0 +1,108 @@
+{% extends 'Client/index.html.twig' %}
+
+
+{% block body %}
+
+    <div class="table-container">
+        <h1>Edit CentreDeDon</h1>
+
+        <div class="form-container">
+            {{ include('centre_de_don/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+
+        <a href="{{ path('app_centre_de_don_index') }}">Back to list</a>
+
+        {{ include('centre_de_don/_delete_form.html.twig') }}
+    </div>
+
+
+    <style>
+    .table-container {
+        margin-top: 100px;
+        text-align: center;
+    }
+
+    .table {
+        margin: auto;
+    }
+
+    body {
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        padding-top: 30px;
+        background-color: #f4f4f4;
+    }
+
+    /* Enlarged form container */
+    .form-container {
+        width: 100%;
+        max-width: 600px; /* Increased width */
+        padding: 25px; /* More padding */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        margin-bottom: 30px;
+    }
+
+    /* Increased spacing between form fields */
+    .form-control {
+        display: flex;
+        flex-direction: column; /* Stack label & input */
+        align-items: flex-start;
+        margin-bottom: 20px; /* More space between fields */
+    }
+
+    /* Labels styling */
+    .form-control label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    /* Increased input field size */
+    .form-control input,
+    .form-control select,
+    .form-control textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    /* Button styling */
+    .btn-block {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s;
+    }
+
+    .btn-block:hover {
+        background-color: #0056b3;
+    }
+
+    /* Footer remains at the bottom */
+    footer {
+        width: 100%;
+        background-color: #f8f9fa;
+        padding: 12px;
+        text-align: center;
+        position: relative;
+        bottom: 0;
+        margin-top: auto;
+    }
+    
+</style>
+{% endblock %}
+
+

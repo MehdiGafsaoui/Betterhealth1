@@ -1,0 +1,75 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block title %}New Produit{% endblock %}
+
+{% block body %}
+    <div class="container d-flex align-items-center justify-content-center min-vh-100">
+        <div class="card shadow p-4 w-50">
+            <h2 class="mb-3 text-center">Create a New Product</h2>
+
+            {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate', 'id': 'submit-cart-form'}}) }}
+
+            <div class="mb-3">
+                {{ form_label(form.nom) }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.nom) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.description) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.quantite) }}
+                {{ form_widget(form.quantite, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.quantite) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.Categorie) }}
+                {{ form_widget(form.Categorie, {'attr': {'class': 'form-select'}}) }}
+                {{ form_errors(form.Categorie) }}
+            </div>
+
+            {# Add the reCAPTCHA widget #}
+            <div class="mb-3">
+                <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}" data-callback="onSubmit"></div>
+                <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+                <div id="recaptcha-error" class="text-danger" style="display: none;">You have to resolve the CAPTCHA.</div>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100" id="submit-button">➕ Add Product</button>
+
+            {{ form_end(form) }}
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="{{ path('app_produit_index') }}" class="btn btn-outline-secondary">⬅ Back to List</a>
+        </div>
+    </div>
+
+    {# Include the reCAPTCHA JavaScript #}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script>
+        function onSubmit(token) {
+            // Set the reCAPTCHA response token in the hidden field
+            document.getElementById('recaptchaResponse').value = token;
+
+            // Submit the form
+            document.getElementById('submit-cart-form').submit();
+        }
+
+        document.getElementById('submit-cart-form').addEventListener('submit', function(event) {
+            const recaptchaResponse = document.getElementById('recaptchaResponse').value;
+            if (!recaptchaResponse) {
+                event.preventDefault(); // Prevent form submission
+                document.getElementById('recaptcha-error').style.display = 'block'; // Show error message
+            } else {
+                document.getElementById('recaptcha-error').style.display = 'none'; // Hide error message
+            }
+        });
+    </script>
+{% endblock %}

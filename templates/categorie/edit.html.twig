@@ -1,0 +1,17 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="w-100">
+            <h1 class="my-4 text-center">Edit Categorie</h1>
+
+            {{ include('categorie/_form.html.twig', {'button_label': 'Update'}) }}
+
+            <div class="mt-4 text-center">
+                <a href="{{ path('app_categorie_index') }}" class="btn btn-secondary">Back to List</a>
+            </div>
+
+            {{ include('categorie/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

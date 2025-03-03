@@ -1,0 +1,61 @@
+{% extends 'Client/index.html.twig' %}
+
+{% block title %}Exercice Mental Details{% endblock %}
+
+{% block body %}
+<div class="container text-center mt-5 pt-4">
+    <h1 class="mb-4 mt-5">Exercice Mental Details</h1> <!-- Added mt-5 class for margin-top -->
+
+    <div class="row mt-4 justify-content-center">
+        <!-- Exercice Details Card -->
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Details</h5>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>ID</th>
+                                <td>{{ exercice_mental.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Video URL</th>
+                                <td>{{ exercice_mental.videoUrl }}</td>
+                            </tr>
+                            <tr>
+                                <th>Titre</th>
+                                <td>{{ exercice_mental.titre }}</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>{{ exercice_mental.description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Durée (minutes)</th>
+                                <td>{{ exercice_mental.dureeMinutes }}</td>
+                            </tr>
+                            <tr>
+                                <th>Objectif</th>
+                                <td>{{ exercice_mental.objectif }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+        <!-- Action Buttons -->
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <a href="{{ path('app_exercice_mental_index') }}" class="btn btn-secondary w-100 mb-2">Back to list</a>
+                    <a href="{{ path('app_exercice_mental_edit', {'id': exercice_mental.id}) }}" class="btn btn-warning w-100 mb-2">Edit</a>
+                    {{ include('exercice_mental/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
